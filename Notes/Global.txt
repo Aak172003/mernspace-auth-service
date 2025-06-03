@@ -1,0 +1,6 @@
+How install as a dev dependencies
+
+npm install -D <package-name>
+or 
+npm install --save-dev <package-name>
+

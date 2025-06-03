@@ -1,0 +1,28 @@
+TypeScript is super set of javascript
+means -> typescript have functionality of javascript with some additional functionality
+
+when we install typescript as a dev-dependencies then 
+then .bin folder which inside node_modules and in this .bin folder  we have tsc and this tsc is a compiler which compile typescript code in javascript code 
+Also in .bin folder we have tsserver ( inisde our id there is ts server is running) this helps to identify error , helps in auto suggestion 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+every typescript project requires a configuration file which is ts.congig file 
+where we defined rootdir , outdir means entery point and where store all compiled typescript file also we define in which js version code compiled 
+
+(this command is used to generate ts.config file)
+./node_modules/.bin/tsc --init
+or 
+npx tsc --init
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Then change this rootDir file 
+
+"rootDir": "./src",   
+"outDir": "./dist" /* Specify an output folder for all emitted files. */,        
+        
+This is used to create dist file , or compile ts file into js file 
+npx tsc
+
