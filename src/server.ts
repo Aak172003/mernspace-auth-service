@@ -1,5 +1,5 @@
-function welcomeMessage(name: string)  {
-  console.log(`Welcome to the Full Stack Development Project ${name}`);
+function welcomeMessage(name: string) {
+    console.log(`Welcome to the Full Stack Development Project ${name}`);
 }
 
 welcomeMessage("Aakash");

@@ -1,0 +1,14 @@
+Prettier is an opinionated code formatter that ensures your code adheres to a consistent style, making it more readable and maintainable.
+
+This is how install prettier as save-exact , which means prettier library freeze , 
+If i install so always install same version
+
+npm install --save-dev --save-exact prettier
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This command is used to check unformatted code  
+npx prettier . --check
+
+This command is used to apply prettier
+npx prettier . --write
