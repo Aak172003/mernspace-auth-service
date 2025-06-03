@@ -1,0 +1,18 @@
+EsLint is a static code analyser , with this analysing the help me to write code in best practices 
+It helps to improve code quality
+
+Visit Typescript Eslint : https://typescript-eslint.io/getting-started
+
+EsLint -> Find and fix problems in your javascript code 
+
+---------------------------------------------------------------------------------------------------
+This is how setup es-lint 
+npm i -D eslint @eslint/js @types/eslint__js typescript-eslint
+
+---------------------------------------------------------------------------------------------------
+
+This tell us which file need , linting 
+npx eslint .
+
+This is used to perform autofix 
+npx eslint . --fix
