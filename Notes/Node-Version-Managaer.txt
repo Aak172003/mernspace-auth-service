@@ -1,0 +1,6 @@
+This is how install any specific node version 
+nvm install v22.10.0
+
+This is how use that specific node version 
+But this below is work only when we create .nvmrc file and inside it we mention which node verison i want to use like v22.10.0
+nvm use 
