@@ -4,3 +4,16 @@ npm install -D <package-name>
 or 
 npm install --save-dev <package-name>
 
+------------------------------------------------------------------------------------------------------------------------
+
+We can pass env variable like this 
+PORT=5555 node dist/server.js  (But this will only work on git bash terminal)
+
+------------------------------------------------------------------------------------------------------------------------
+
+// This is one way to read all variables from .env files 
+import { config } from "dotenv";
+config();
+
+// This is second way to read all variables from .env files 
+import 'dotenv/config'
