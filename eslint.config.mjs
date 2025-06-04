@@ -22,7 +22,7 @@ export default tseslint.config(
             // off : no error
             // warn : warning
             // error : error
-            "no-console": "off",
+            "no-console": "error",
             // dot-notation is used to check if the property is accessed using dot notation
             "dot-notation": "error",
         },
