@@ -16,9 +16,9 @@ function welcomeMessage(name: string) {
     console.log(user["age"]);
     console.log(user["email"]);
     */
-    console.log(user.name);
-    console.log(user.age);
-    console.log(user.email);
+    console.log(user["name"]);
+    console.log(user["age"]);
+    console.log(user["email"]);
 
     console.log(`Welcome to the Full Stack Development Project ${name}`);
 }
