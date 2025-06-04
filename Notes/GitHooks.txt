@@ -12,3 +12,12 @@ npx husky init
 
 if we write any script then whenever i commet something it will run on whole code , this not make sence 
 but it could be better with if we are using lint stage which run pre hook script only on that modified things 
+
+"lint-staged": {
+        "*.ts": [
+            "format:fix",
+            "lint:fix"
+        ]
+    }
+    
+when we setup lint-staged in our project so we just need to add lint-staged command in pre-commit file to run lint-staged 
