@@ -7,3 +7,8 @@ npm install --save-dev husky
 
 The init command simplifies setting up husky in a project. It creates a pre-commit script in .husky/ and updates the prepare script in package.json. 
 npx husky init
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+if we write any script then whenever i commet something it will run on whole code , this not make sence 
+but it could be better with if we are using lint stage which run pre hook script only on that modified things 
