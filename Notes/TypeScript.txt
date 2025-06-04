@@ -26,3 +26,11 @@ Then change this rootDir file
 This is used to create dist file , or compile ts file into js file 
 npx tsc
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+With TypeScript being a superset of JavaScript, using it means compiling your TypeScript files down to pure JavaScript before the V8 engine can understand them. 
+You could watch for file changes and automate the compiling. But sometimes, you just want to run your script and get results. 
+This is where ts-node comes in. With ts-node, you can skip the fuss and execute your TypeScript scripts with ease
+
+
+But Nodemon internally use ts-node to run our server (to run typescript code) 
