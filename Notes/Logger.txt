@@ -1,0 +1,19 @@
+Here we use winston to generate loggers 
+This is winston logger level
+
+Move from top to down 
+if i select info so below info all level will show 
+if i select silly so all debug , verbose , http , info , warn , error log we can see 
+But if i select error , so there is not below than error so we can see only log error 
+
+logging levels are prioritized from 0 to 6 (highest to lowest):
+
+const levels = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  verbose: 4,
+  debug: 5,
+  silly: 6
+};
