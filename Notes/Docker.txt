@@ -1,0 +1,42 @@
+Docker : Docker has revolutionized the way we build, package, and deploy applications. 
+By containerizing applications, we ensure consistent behavior across different environments, be it a developer's local machine 🖥️, a staging environment, or production 🚀.
+
+
+What is Docker? 🐳
+Docker is a platform that enables developers to create, deploy, and run applications in containers. 
+A container is a standardized unit of software that contains everything the software needs to run: code, runtime, system tools, system libraries, and settings.
+
+this is used to generate image 
+
+Here : 
+1. here -f means (path of dockerfile to generate image)
+2. here . means from where start (root folder)
+
+docker build -t mernspace-auth-service:dev -f docker/dev/Dockerfile . 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+this is used to sync the local repo with container (like once we built image and whenever i chnage anything in my code that conatiner will auto refresh and work as new updated code container)
+
+Here 
+1. --rm -> when container stop image automatically delete from docker desktop
+2. -it -> run conatiner as interactive mode (whatever happening while runner container that will show in terminal)
+
+3. -v ${PWD}:/usr/src/app -> to do this we need to add -v then add sync with docker file structure ${PWD}:/usr/src/app
+like once we built image and whenever i chnage anything in my code that conatiner will auto refresh and work as new updated code container ( with this we make syncing between local repo and docker image )
+this process is called Bind Mounts
+
+4. -v /usr/src/app/node_modules -> this is called anonymous bind 
+(which means dont sync node_modules fiels , don't touch this while syncing whole code )
+
+5. --env-file ${PWD}/.env -> provide absolute path of .env file (This is how we inject ,env variable into docker running container)
+
+6. -p 5501:5501 -> prot mapping or port binding ( left side is our hoast machine port , right side is docker( conatiner running on which port or application running on which port) )
+7. -e NODE_ENV=development -> this is how we pass environment variable 
+
+docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env -p 5501:5501 -e NODE_ENV=development mernspace-auth-service:dev
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To enable auto-sync when code changes in local code with docker container image add this like where dev server start 
+"dev": "nodemon src/server.ts --legacy-watch",

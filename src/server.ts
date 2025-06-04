@@ -2,7 +2,7 @@ import { ConfigVariables } from "./config";
 import app from "./app";
 import logger from "./config/logger";
 
-console.log(ConfigVariables.PORT);
+console.log("Running on Port ------>>>>>> ", ConfigVariables.PORT);
 
 const startServer = () => {
     const PORT = ConfigVariables.PORT;
