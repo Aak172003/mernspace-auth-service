@@ -1,0 +1,22 @@
+To setup jest 
+npm install --save-dev jest
+
+change in pacakge.json file 
+"test": "jest",
+
+instally ts-jest ( jest with typescript )
+npm install --save-dev ts-jest
+
+Then setup config file 
+setup jest.config.js file 
+
+Also install @types/jest 
+
+--------------------------------------------------------------------------------------------
+
+So Bydefault our all test cases concurrently run because we may face many problems 
+but i want that all test cases execute in sequentially manner , to achieve this just add --runInBand
+
+--watch -> enable watchman to automatically run when we change any thing in code like nodemon
+
+"test": "jest --watch --runInBand",

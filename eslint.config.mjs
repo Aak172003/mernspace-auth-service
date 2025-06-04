@@ -8,7 +8,12 @@ export default tseslint.config(
     // ...tseslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
     {
-        ignores: ["dist", "node_modules", "eslint.config.mjs"],
+        ignores: [
+            "dist",
+            "node_modules",
+            "eslint.config.mjs",
+            "jest.config.js",
+        ],
     },
     {
         languageOptions: {
@@ -25,6 +30,7 @@ export default tseslint.config(
             "no-console": "off",
             // dot-notation is used to check if the property is accessed using dot notation
             "dot-notation": "error",
+            "@typescript-eslint/no-misused-promises": "off",
         },
     },
 );

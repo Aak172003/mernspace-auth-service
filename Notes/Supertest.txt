@@ -1,0 +1,6 @@
+This is the npm which is used for api testing 
+
+Install this to perform api testing 
+npm i -D supertest @types/supertest
+
+SuperTest run own server to test api we don't need to run npm run dev
