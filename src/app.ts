@@ -2,8 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import logger from "./config/logger";
 import { HttpError } from "http-errors";
 
-import authRouter from "./routes/auth";
-
 const app = express();
 
 // Use next error because if we throw error in asynchronous function so global error handler would n't catch this error
@@ -16,7 +14,6 @@ app.get("/", (req, res, next) => {
     res.send("Welcome to Auth Service");
 });
 
-app.use("/auth", authRouter);
 // Global Middleware -> which automatically execute whenever we hit any api endpoint
 // Global error Handler
 
