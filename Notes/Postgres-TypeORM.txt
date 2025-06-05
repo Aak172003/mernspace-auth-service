@@ -49,11 +49,20 @@ docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWO
 
 
 
-
-
 ------------------------------------------------- TypeORM ----------------------------------------------------
 
+
+If our application  need to interatct with db so we have to write raw queries then execute from our application with this we can be able to interact with application 
+
+TypeORM provide a extra layer between our application and database (like provide some api like mongoose with this api or functions we can easily interact with database )
 Type ORM is used to connect the Postgres db with our application
+
+Also it provide capabilty to use database base in plug in-out mode like we can able so change database anytime with the help of typeORM 
+
+**************************************************************************************************
+We need to create any application in such a way , we can change database in anytime    
+
+**************************************************************************************************
 
 
 

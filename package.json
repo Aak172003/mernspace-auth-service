@@ -44,6 +44,7 @@
     "dependencies": {
         "express": "^5.1.0",
         "http-errors": "^2.0.0",
+        "typeorm": "^0.3.24",
         "winston": "^3.17.0"
     }
 }

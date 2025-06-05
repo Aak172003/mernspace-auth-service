@@ -35,10 +35,10 @@ describe("POST /aut/register", () => {
                 .post("/auth/register")
                 .send(userData);
 
-            console.log(
-                "response.headers ::::::::::::: ",
-                response.headers["content-type"],
-            );
+            // console.log(
+            //     "response.headers ::::::::::::: ",
+            //     response.headers["content-type"],
+            // );
 
             // Here we compare
             // expect(
@@ -48,6 +48,26 @@ describe("POST /aut/register", () => {
             expect(response.headers["content-type"]).toEqual(
                 expect.stringContaining("json"),
             );
+        });
+
+        it("should persist the user in database", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            console.log(
+                "should persist the user in database test",
+                response.headers["content-type"],
+            );
+
+            // Assert
         });
     });
 
