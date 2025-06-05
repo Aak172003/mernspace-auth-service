@@ -22,6 +22,33 @@ describe("POST /aut/register", () => {
             // here toBe is a matcher
             expect(response.statusCode).toBe(201);
         });
+
+        it("Should return valid json response", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            console.log(
+                "response.headers ::::::::::::: ",
+                response.headers["content-type"],
+            );
+
+            // Here we compare
+            // expect(
+            //     (response.headers as Record<string, string>)["content-type"],
+            // ).toEqual(expect.stringContaining("json"));
+
+            expect(response.headers["content-type"]).toEqual(
+                expect.stringContaining("json"),
+            );
+        });
     });
 
     // Sad Path -> Basically means (Fields are missing)

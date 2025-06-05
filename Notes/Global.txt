@@ -17,3 +17,7 @@ config();
 
 // This is second way to read all variables from .env files 
 import 'dotenv/config'
+
+------------------------------------------------------------------------------------------------------------------------
+
+In express by default every json travel in plain text format 
