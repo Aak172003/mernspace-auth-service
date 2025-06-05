@@ -31,7 +31,7 @@ this process is called Bind Mounts
 
 5. --env-file ${PWD}/.env -> provide absolute path of .env file (This is how we inject ,env variable into docker running container)
 
-6. -p 5501:5501 -> prot mapping or port binding ( left side is our hoast machine port , right side is docker( conatiner running on which port or application running on which port) )
+6. -p 5501:5501 -> PORT mapping or port binding ( left side is our hoast machine port , right side is docker( conatiner running on which port or application running on which port) )
 7. -e NODE_ENV=development -> this is how we pass environment variable 
 
 docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env -p 5501:5501 -e NODE_ENV=development mernspace-auth-service:dev
@@ -44,3 +44,10 @@ To enable auto-sync when code changes in local code with docker container image 
 this script is used to sync between local and git repo , if i change any thing in local , so this change will reflect on container
 
 "dev": "nodemon src/server.ts --legacy-watch",
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Volume Mount : 
+To create persistant data volume in docker to persist data even if we restart the postgres container 
+
+docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres 

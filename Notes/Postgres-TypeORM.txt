@@ -1,0 +1,63 @@
+Here  we use Postgres becuase we have structed data basically mongoDb is used when we have unstructured data 
+
+PostgreSQL is a relational database, meaning it stores data in tables with rows and columns, and enforces strong ACID compliance for data integrity. 
+MongoDB, on the other hand, is a NoSQL database, offering flexible document-oriented storage, excellent for unstructured or semi-structured data and high scalabilit
+
+
+
+## PostgreSQL Features 🔍🤔
+
+While both PostgreSQL and MongoDB have their strengths and use cases, here are some reasons you might prefer PostgreSQL, especially for an auth service:
+
+1. ACID Transactions ✔️: PostgreSQL is a relational database that offers full ACID (Atomicity, Consistency, Isolation, Durability) compliance. This means that it's incredibly reliable for tasks that require data integrity, such as user authentication.
+
+2. Complex Queries 🔍: Due to its SQL nature, PostgreSQL excels at handling complex queries. If your auth service ever needs to perform intricate searches or joins, PostgreSQL can handle it smoothly.
+
+3. Extensions and Flexibility 🛠️: PostgreSQL is known for its extensibility. With the right extensions, you can even use PostgreSQL as a NoSQL database, offering you the best of both worlds!
+
+4. Data Types 📊: PostgreSQL supports a plethora of data types, including arrays, hstore, and JSON. This means greater flexibility in how you store and retrieve data.
+
+5. Maturity & Community Support 🤝:
+PostgreSQL has been around since 1996 and has a robust community. This ensures continuous improvements, security updates, and a vast pool of resources and experts to consult.
+
+## Why Consider PostgreSQL for Auth Service? 🔐
+
+1. Security: PostgreSQL offers a comprehensive suite of security features, including SSL support, row-level security, and strong password hashing mechanisms.
+2. Scalability: As your user base grows, PostgreSQL scales efficiently, ensuring your auth service remains responsive.
+3. Consistency: Given the importance of user data in authentication services, the data integrity offered by PostgreSQL is a valuable asset.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Volume Mount : 
+To create persistant data volume in docker to persist data even if we restart the postgres container 
+
+1. -d -> run this in detached mode (means we can see its running activity in my terminal)
+
+2. --rm -> when container stop image automatically delete from docker desktop
+
+3. -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -> this is how we pass environment variable 
+
+4. --name mernpg-container -> provide a valid name tp running container 
+
+5. -v mernpgdata:/var/lib/postgresql/data -> syncing data with volume (to do this we need to add -v then add sync between docker volume and postgres data mernpgdata:/var/lib/postgresql/data)
+here /var/lib/postgresql/data is the data directory where our actual data store in postgres database 
+
+6. -p 5432:5432 -> PORT mapping or port binding ( left side is our hoast machine port , right side is docker( conatiner running on which port or Postgres running on which port) )
+ 
+This is how run postgres docker image : 
+docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres 
+
+
+
+
+
+------------------------------------------------- TypeORM ----------------------------------------------------
+
+Type ORM is used to connect the Postgres db with our application
+
+
+
+
+
+
+
