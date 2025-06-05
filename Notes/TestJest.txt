@@ -20,3 +20,8 @@ but i want that all test cases execute in sequentially manner , to achieve this 
 --watch -> enable watchman to automatically run when we change any thing in code like nodemon
 
 "test": "jest --watch --runInBand",
+
+--------------------------------------------------------------------------------------------
+we can skip any test cases for testing 
+
+describe.skip(" ", ( ) => { })
