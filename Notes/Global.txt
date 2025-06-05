@@ -21,3 +21,15 @@ import 'dotenv/config'
 ------------------------------------------------------------------------------------------------------------------------
 
 In express by default every json travel in plain text format 
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+We can make dotenv config read environment varible as dynamically nased on our NODE_ENV it will read environment variable based on NODE_ENV 
+This module path is work dynamically based on operating systems 
+
+config({
+    path: path.join(__dirname, `../../.env.${process.env.NODE_ENV ?? "dev"}`),
+});
+
+

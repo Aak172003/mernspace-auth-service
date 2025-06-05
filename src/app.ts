@@ -1,3 +1,7 @@
+//import it somewhere in the global place of your app (for example in app.ts):
+
+import "reflect-metadata";
+
 import express, { NextFunction, Request, Response } from "express";
 import logger from "./config/logger";
 import { HttpError } from "http-errors";

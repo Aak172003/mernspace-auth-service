@@ -1,0 +1,10 @@
+Property 'id' has no initializer and is not definitely assigned in the constructor.
+
+disable 
+Check for class properties that are declared but not set in the constructor.
+"strictPropertyInitialization": false,             
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+error: database "mernstack_auth_service_test" does not exist
+means need to create manually database in postgres db 
