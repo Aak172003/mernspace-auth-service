@@ -38,5 +38,9 @@ docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-fi
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+********** 
+
 To enable auto-sync when code changes in local code with docker container image add this like where dev server start 
+this script is used to sync between local and git repo , if i change any thing in local , so this change will reflect on container
+
 "dev": "nodemon src/server.ts --legacy-watch",
