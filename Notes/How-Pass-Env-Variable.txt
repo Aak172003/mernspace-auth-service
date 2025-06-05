@@ -1,0 +1,12 @@
+This is how we pass NODE_ENV variable to dev script 
+"dev": "NODE_ENV=dev nodemon src/server.ts --legacy-watch",
+
+But the problem is we can't pass NODE_ENV like this because all Operating system is not work aslike same 
+Which means in some OS this method of passing NODE_ENV varible is not working 
+
+So to resolve this issue and make consistent behaviour of all Operating system
+We use a npm which known as cross-env 
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+For Testing we don't need to inject NODE_ENV varible, Jest automatically do by ownself 
