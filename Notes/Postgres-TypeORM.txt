@@ -48,9 +48,7 @@ This is how run postgres docker image :
 docker run --rm --name mernpg-container -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -v mernpgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres 
 
 
-
 ------------------------------------------------- TypeORM ----------------------------------------------------
-
 
 If our application  need to interatct with db so we have to write raw queries then execute from our application with this we can be able to interact with application 
 
