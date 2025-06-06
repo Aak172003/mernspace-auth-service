@@ -101,8 +101,13 @@ describe("POST /aut/register", () => {
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
 
-            expect(users).toHaveLength(0);
-            // expect(users).toHaveLength(1);
+            // expect(users).toHaveLength(0);
+            expect(users).toHaveLength(1);
+            expect(users[0].email).toEqual(userData.email);
+
+            expect(users[0].firstName).toEqual(userData.firstName);
+
+            expect(users[0].lastName).toEqual(userData.lastName);
         });
     });
 

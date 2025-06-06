@@ -8,3 +8,12 @@ Check for class properties that are declared but not set in the constructor.
 
 error: database "mernstack_auth_service_test" does not exist
 means need to create manually database in postgres db 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TypeError: Cannot destructure property 'firstName' of 'req.body' as it is undefined.
+Which means we need to add 
+app.use(express.json());
+
+
+

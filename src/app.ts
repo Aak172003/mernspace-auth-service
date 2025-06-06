@@ -9,6 +9,8 @@ import authRouter from "./routes/auth";
 
 const app = express();
 
+app.use(express.json());
+
 // Use next error because if we throw error in asynchronous function so global error handler would n't catch this error
 // so to resolve this issue we use next(err)
 
