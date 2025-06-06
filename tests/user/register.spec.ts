@@ -3,8 +3,9 @@ import app from "../../src/app";
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
 // import { User } from "../../src/entity/User";
-import { truncateTables } from "../../src/utils";
+// import { truncateTables } from "../../src/utils";
 import { User } from "../../src/entity/User";
+import { Roles } from "../../src/constants";
 
 // All Test cases group inside describe
 describe("POST /aut/register", () => {
@@ -19,9 +20,13 @@ describe("POST /aut/register", () => {
 
         // This execute before each test case run
         beforeEach(async () => {
+            // here we
+            await connection.dropDatabase();
+            await connection.synchronize();
+
             // Database Truncate
 
-            await truncateTables(connection);
+            // await truncateTables(connection);
         });
 
         // This will execute after all test cases run
@@ -80,7 +85,7 @@ describe("POST /aut/register", () => {
             );
         });
 
-        it("should persist the user in database", async () => {
+        it("Should persist the user in database", async () => {
             const userData = {
                 firstName: "Rakesh",
                 lastName: "K",
@@ -108,7 +113,7 @@ describe("POST /aut/register", () => {
             expect(users[0].lastName).toEqual(userData.lastName);
         });
 
-        it("should return an id of created user", async () => {
+        it("Should return an id of created user", async () => {
             const userData = {
                 firstName: "Rakesh",
                 lastName: "K",
@@ -138,6 +143,27 @@ describe("POST /aut/register", () => {
             expect((response.body as Record<string, string>).id).toBe(
                 users[0].id,
             );
+        });
+
+        it("Should assign a customer role", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
+            console.log("response.body :::::::::::: ", response.body);
+            expect(users[0]).toHaveProperty("role");
+            expect(users[0].role).toBe(Roles.CUSTOMER);
         });
     });
 
