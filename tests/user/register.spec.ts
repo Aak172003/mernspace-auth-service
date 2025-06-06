@@ -108,7 +108,37 @@ describe("POST /aut/register", () => {
             expect(users[0].lastName).toEqual(userData.lastName);
         });
 
-        it.todo("should return an id of created user");
+        it("should return an id of created user", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            console.log(
+                "should persist the user in database test",
+                response.headers["content-type"],
+            );
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
+            console.log("response.body :::::::::::: ", response.body);
+            expect(response.body).toHaveProperty("id");
+
+            expect(users[0]).toHaveProperty("id");
+
+            // Check here response id and user id in db are same or not
+            expect((response.body as Record<string, string>).id).toBe(
+                users[0].id,
+            );
+        });
     });
 
     // Sad Path -> Basically means (Fields are missing)
