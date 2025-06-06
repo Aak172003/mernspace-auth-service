@@ -4,22 +4,32 @@ import { User } from "../entity/User";
 import { UserData } from "../types";
 import createHttpError from "http-errors";
 import { Roles } from "../constants";
+// import bcrypt from "bcrypt";
+import { CredentialService } from "./CredentialService";
 
 export class UserService {
     constructor(
         // Need to mention this repository for which entity
         private userRepository: Repository<User>,
+        private credentialService: CredentialService,
     ) {}
     async create({ firstName, lastName, email, password }: UserData) {
         // we don't need to create any instance here beacuse we are using dependency injection
         // const userRepository = AppDataSource.getRepository(User);
 
+        // --------------------------------------------------------------------------------------
+        // Always make sure don't add any no. in code this is called magic number ,
+        // Always store that no in any variable then use like const saltRounds = 10;
+        // --------------------------------------------------------------------------------------
+        // const saltRounds = 10;
+        const hashedPassword =
+            await this.credentialService.giveHashedPassword(password);
         try {
             return await this.userRepository.save({
                 firstName,
                 lastName,
                 email,
-                password,
+                password: hashedPassword,
                 role: Roles.CUSTOMER,
             });
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -165,6 +165,41 @@ describe("POST /aut/register", () => {
             expect(users[0]).toHaveProperty("role");
             expect(users[0].role).toBe(Roles.CUSTOMER);
         });
+
+        it("Should stored the hashed password", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+
+            console.log("users :::::::::::: ", users);
+            console.log(
+                "users[0].password ::::::::::::::::::: ",
+                users[0].password,
+            );
+            expect(users[0].password).not.toBe(userData.password);
+            expect(users[0].password).toHaveLength(60);
+
+            // Check here this hashd password is really match the wile card pattern
+            // this is escape sequence -> \$ -> $
+            // any regular expression start and end with /
+            // 1. \$2[a|b]\$
+            // 2. \d+
+            // 3. \$
+
+            expect(users[0].password).toMatch(/^\$2[a|b]\$\d+\$/);
+        });
     });
 
     // Sad Path -> Basically means (Fields are missing)
