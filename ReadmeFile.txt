@@ -28,3 +28,6 @@ use postgres docker container for our auth service database
 
 Volume Mount : 
 crate persistant data volume in docker to persist data even if we restart the postgres container 
+
+
+Make Less dependent , so we use dependency injection 

@@ -33,3 +33,11 @@ config({
 });
 
 
+If i assess any function which present inside class with creating an instance in controller 
+This make our application highly coupled -> which means without UserService our any controller never work 
+To avoid this highly coupled approach we hav eto do dependecy injection
+
+const userService = new UserService();
+await userService.create({ firstName, lastName, email, password });
+
+How we can do just create contructor and revice that instace in its contructor

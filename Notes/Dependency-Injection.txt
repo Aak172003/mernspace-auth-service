@@ -1,0 +1,21 @@
+
+Method -------- 1
+
+If we use this approach to perform dependecy injection so we have to assign this.userService = userService which is  atype of UserService
+userService: UserService;
+constructor(userService: UserService) {
+    this.userService = userService;
+}
+   
+If we use private prefix so we dont need to assign anything using this keyword
+ 
+constructor(private userService: UserService) {
+    this.userService = userService;
+}
+
+
+Method -------- 2
+constructor(
+    Need to mention this repository for which entity
+    private userRepository: Repository<User>,
+) {}

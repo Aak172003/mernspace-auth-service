@@ -104,11 +104,11 @@ describe("POST /aut/register", () => {
             // expect(users).toHaveLength(0);
             expect(users).toHaveLength(1);
             expect(users[0].email).toEqual(userData.email);
-
             expect(users[0].firstName).toEqual(userData.firstName);
-
             expect(users[0].lastName).toEqual(userData.lastName);
         });
+
+        it.todo("should return an id of created user");
     });
 
     // Sad Path -> Basically means (Fields are missing)
