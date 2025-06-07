@@ -98,7 +98,7 @@ describe("POST /aut/register", () => {
                 .send(userData);
 
             console.log(
-                "should persist the user in database test",
+                "Should persist the user in database test",
                 response.headers["content-type"],
             );
 
@@ -126,7 +126,7 @@ describe("POST /aut/register", () => {
                 .send(userData);
 
             console.log(
-                "should persist the user in database test",
+                "Should persist the user in database test",
                 response.headers["content-type"],
             );
 
@@ -222,8 +222,6 @@ describe("POST /aut/register", () => {
 
             // Assert
             const users = await userRepository.find();
-            console.log("user -------------------- ", users[0]);
-
             expect(response.statusCode).toBe(400);
             expect(users).toHaveLength(1);
         });
@@ -231,7 +229,7 @@ describe("POST /aut/register", () => {
 
     // Sad Path -> Basically means (Fields are missing)
     describe("Fields are missing", () => {
-        it("should reture 400 status code  if email field is missing", async () => {
+        it("Should reture 400 status code  if email field is missing", async () => {
             const userData = {
                 firstName: "",
                 lastName: "K",
@@ -239,25 +237,63 @@ describe("POST /aut/register", () => {
                 password: "secret",
             };
 
-             
             const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
 
             const userRepository = connection.getRepository(User);
-
             // This return list of user
             const users = await userRepository.find();
 
             // Assert
             expect(response.statusCode).toBe(400);
 
-            console.log(
-                "error - message ------------------------------------------------- ",
-                response.body,
-            );
+            // console.log(
+            //     "error - message ------------------------------------------------- ",
+            //     response.body,
+            // );
             // Here make sure , if email is not revecive so no new user create in db
             expect(users).toHaveLength(0);
         });
+
+        // Pending Test Case
+        it.todo("Should reture 400 status code  if firstName field is missing");
+        it.todo("Should reture 400 status code  if lastName field is missing");
+        it.todo("Should reture 400 status code  if password field is missing");
+    });
+
+    describe("Fields are not in proper format", () => {
+        it("Should trim the email field ", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "          rakesh@mern.space          ",
+                password: "secret",
+            };
+
+            // Assert
+            await request(app).post("/auth/register").send(userData);
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+
+            const users = await userRepository.find();
+
+            // Assert
+            const trimEmail = userData.email.trim();
+            expect(users[0].email).toBe(trimEmail);
+        });
+
+        // Pending Test Case
+        it.todo("Should return 400 status code if email is not as valid email");
+        test.todo(
+            "Should return 400 status code if password length is less than 8 characters",
+        );
+        it.todo(
+            "Should return message (Password is too short) if password length < 8 ",
+        );
+        it.todo(
+            "Should return message (Password is too long) if password length greater than 10 ",
+        );
     });
 });
