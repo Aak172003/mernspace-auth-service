@@ -14,6 +14,28 @@ export class UserService {
         private credentialService: CredentialService,
     ) {}
     async create({ firstName, lastName, email, password }: UserData) {
+        // Find any user is already register with the email id or not
+        const findUser = await this.userRepository.findOne({
+            where: { email: email },
+        });
+
+        console.log("findUser ::::::::::::::: ", findUser);
+
+        if (findUser) {
+            // Here we use createHttpError because it has one key as well which is statusCode but in normal Error dont have key like statusCode
+            // so to get statusCode key we use createHttpError form http-error library
+            // interface Error {
+            //     name: string;
+            //     message: string;
+            //     stack?: string;
+            // }
+
+            // Also we just we to create an custom error that's why we use
+
+            const error = createHttpError(400, "Email already exist");
+            throw error;
+        }
+
         // we don't need to create any instance here beacuse we are using dependency injection
         // const userRepository = AppDataSource.getRepository(User);
 

@@ -183,11 +183,10 @@ describe("POST /aut/register", () => {
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
 
-            console.log("users :::::::::::: ", users);
-            console.log(
-                "users[0].password ::::::::::::::::::: ",
-                users[0].password,
-            );
+            // console.log(
+            //     "users[0].password ::::::::::::::::::: ",
+            //     users[0].password,
+            // );
             expect(users[0].password).not.toBe(userData.password);
             expect(users[0].password).toHaveLength(60);
 
@@ -199,6 +198,35 @@ describe("POST /aut/register", () => {
             // 3. \$
 
             expect(users[0].password).toMatch(/^\$2[a|b]\$\d+\$/);
+        });
+
+        it("Should return 400 status code if given email is already exist", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            // Assert
+            const userRepository = connection.getRepository(User);
+            // Save a user in database
+            await userRepository.save({
+                ...userData,
+                role: Roles.CUSTOMER,
+            });
+
+             
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            const users = await userRepository.find();
+            console.log("user -------------------- ", users[0]);
+
+            expect(response.statusCode).toBe(400);
+            expect(users).toHaveLength(1);
         });
     });
 
