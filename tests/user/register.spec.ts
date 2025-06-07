@@ -9,37 +9,37 @@ import { Roles } from "../../src/constants";
 
 // All Test cases group inside describe
 describe("POST /aut/register", () => {
+    let connection: DataSource;
+
+    // This will execute before all test case execution
+    beforeAll(async () => {
+        connection = await AppDataSource.initialize();
+    });
+
+    // This execute before each test case run
+    beforeEach(async () => {
+        // here we
+        await connection.dropDatabase();
+        await connection.synchronize();
+
+        // Database Truncate
+
+        // await truncateTables(connection);
+    });
+
+    // This will execute after all test cases run
+    afterAll(async () => {
+        // await connection.destroy();
+
+        if (connection) {
+            await connection.destroy();
+        } else {
+            console.error("Connection is undefined during afterAll");
+        }
+    });
+
     // Happy Path -> Basically means (Given all fields)
     describe("Given all fields", () => {
-        let connection: DataSource;
-
-        // This will execute before all test case execution
-        beforeAll(async () => {
-            connection = await AppDataSource.initialize();
-        });
-
-        // This execute before each test case run
-        beforeEach(async () => {
-            // here we
-            await connection.dropDatabase();
-            await connection.synchronize();
-
-            // Database Truncate
-
-            // await truncateTables(connection);
-        });
-
-        // This will execute after all test cases run
-        afterAll(async () => {
-            // await connection.destroy();
-
-            if (connection) {
-                await connection.destroy();
-            } else {
-                console.error("Connection is undefined during afterAll");
-            }
-        });
-
         it("Should return 201 status code if i pass all given field ", async () => {
             // AAA -> Arrange the data , Act on Data , Assert (Check Output)
 
@@ -216,7 +216,6 @@ describe("POST /aut/register", () => {
                 role: Roles.CUSTOMER,
             });
 
-             
             const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
@@ -231,5 +230,34 @@ describe("POST /aut/register", () => {
     });
 
     // Sad Path -> Basically means (Fields are missing)
-    describe("Fields are missing", () => {});
+    describe("Fields are missing", () => {
+        it("should reture 400 status code  if email field is missing", async () => {
+            const userData = {
+                firstName: "",
+                lastName: "K",
+                email: "",
+                password: "secret",
+            };
+
+             
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            const userRepository = connection.getRepository(User);
+
+            // This return list of user
+            const users = await userRepository.find();
+
+            // Assert
+            expect(response.statusCode).toBe(400);
+
+            console.log(
+                "error - message ------------------------------------------------- ",
+                response.body,
+            );
+            // Here make sure , if email is not revecive so no new user create in db
+            expect(users).toHaveLength(0);
+        });
+    });
 });
