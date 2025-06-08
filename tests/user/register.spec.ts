@@ -237,8 +237,6 @@ describe("POST /aut/register", () => {
                 .send(userData);
 
             // Assert
-            // let accessToken: string;
-            // let refreshToken: string;
             let accessToken = null;
             let refreshToken = null;
 
