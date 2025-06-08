@@ -224,7 +224,7 @@ describe("POST /aut/register", () => {
 
         // ---------------------------------------- JWT Token TestCases -------------------------------------------
 
-        it("should return the acess token and refresh token inside a cookie ", async () => {
+        it("Should return the acess token and refresh token inside a cookie ", async () => {
             const userData = {
                 firstName: "Rakesh",
                 lastName: "K",
@@ -241,11 +241,7 @@ describe("POST /aut/register", () => {
             let refreshToken = null;
 
             const cookies = response.headers["set-cookie"] || [];
-
-            console.log(
-                "This is cookies ----------------------------------------------------------- ",
-                cookies,
-            );
+            // console.log("cookies ::::::::::::::::::: ", cookies);
             for (const cookie of cookies) {
                 if (cookie.startsWith("accessToken=")) {
                     accessToken = cookie.split(";")[0].split("=")[1];
@@ -255,8 +251,6 @@ describe("POST /aut/register", () => {
                     refreshToken = cookie.split(";")[0].split("=")[1];
                 }
             }
-            console.log("accessToken : ", accessToken);
-            console.log("refreshToken : ", refreshToken);
 
             expect(accessToken).not.toBeNull();
             expect(refreshToken).not.toBeNull();
