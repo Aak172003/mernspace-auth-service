@@ -1,10 +1,8 @@
 import { Repository } from "typeorm";
-// import { AppDataSource } from "../config/data-source";
 import { User } from "../entity/User";
 import { UserData } from "../types";
 import createHttpError from "http-errors";
 import { Roles } from "../constants";
-// import bcrypt from "bcrypt";
 import { CredentialService } from "./CredentialService";
 
 export class UserService {
@@ -18,9 +16,6 @@ export class UserService {
         const findUser = await this.userRepository.findOne({
             where: { email: email },
         });
-
-        console.log("findUser ::::::::::::::: ", findUser);
-
         if (findUser) {
             // Here we use createHttpError because it has one key as well which is statusCode but in normal Error dont have key like statusCode
             // so to get statusCode key we use createHttpError form http-error library

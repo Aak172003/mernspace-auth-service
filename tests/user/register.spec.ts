@@ -2,8 +2,6 @@ import request from "supertest";
 import app from "../../src/app";
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
-// import { User } from "../../src/entity/User";
-// import { truncateTables } from "../../src/utils";
 import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
 import { isJWT } from "../../src/utils";
@@ -25,14 +23,12 @@ describe("POST /aut/register", () => {
         await connection.synchronize();
 
         // Database Truncate
-
         // await truncateTables(connection);
     });
 
     // This will execute after all test cases run
     afterAll(async () => {
         // await connection.destroy();
-
         if (connection) {
             await connection.destroy();
         } else {
@@ -90,20 +86,11 @@ describe("POST /aut/register", () => {
                 password: "secret",
             };
 
-            const response = await request(app)
-                .post("/auth/register")
-                .send(userData);
+            await request(app).post("/auth/register").send(userData);
 
-            console.log(
-                "Should persist the user in database test",
-                response.headers["content-type"],
-            );
-
-            // Assert
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
-
-            // expect(users).toHaveLength(0);
+            // Assert
             expect(users).toHaveLength(1);
             expect(users[0].email).toEqual(userData.email);
             expect(users[0].firstName).toEqual(userData.firstName);
@@ -122,20 +109,12 @@ describe("POST /aut/register", () => {
                 .post("/auth/register")
                 .send(userData);
 
-            console.log(
-                "Should persist the user in database test",
-                response.headers["content-type"],
-            );
-
             // Assert
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
 
-            console.log("response.body :::::::::::: ", response.body);
             expect(response.body).toHaveProperty("id");
-
             expect(users[0]).toHaveProperty("id");
-
             // Check here response id and user id in db are same or not
             expect((response.body as Record<string, string>).id).toBe(
                 users[0].id,
@@ -150,15 +129,11 @@ describe("POST /aut/register", () => {
                 password: "secret",
             };
 
-            const response = await request(app)
-                .post("/auth/register")
-                .send(userData);
+            await request(app).post("/auth/register").send(userData);
 
             // Assert
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
-
-            console.log("response.body :::::::::::: ", response.body);
             expect(users[0]).toHaveProperty("role");
             expect(users[0].role).toBe(Roles.CUSTOMER);
         });
@@ -179,11 +154,6 @@ describe("POST /aut/register", () => {
             // Assert
             const userRepository = connection.getRepository(User);
             const users = await userRepository.find();
-
-            // console.log(
-            //     "users[0].password ::::::::::::::::::: ",
-            //     users[0].password,
-            // );
             expect(users[0].password).not.toBe(userData.password);
             expect(users[0].password).toHaveLength(60);
 
@@ -247,12 +217,10 @@ describe("POST /aut/register", () => {
                 if (cookie.startsWith("accessToken=")) {
                     accessToken = cookie.split(";")[0].split("=")[1];
                 }
-
                 if (cookie.startsWith("refreshToken=")) {
                     refreshToken = cookie.split(";")[0].split("=")[1];
                 }
             }
-
             expect(accessToken).not.toBeNull();
             expect(refreshToken).not.toBeNull();
 
@@ -274,7 +242,6 @@ describe("POST /aut/register", () => {
                 .send(userData);
 
             const refreshTokenRepo = connection.getRepository(RefreshToken);
-
             const refreshTokens = await refreshTokenRepo.find();
 
             // we just check refreshtoken.userid is exist in user table or not , as response retur user id so we can check that
@@ -308,14 +275,8 @@ describe("POST /aut/register", () => {
             const userRepository = connection.getRepository(User);
             // This return list of user
             const users = await userRepository.find();
-
             // Assert
             expect(response.statusCode).toBe(400);
-
-            // console.log(
-            //     "error - message ------------------------------------------------- ",
-            //     response.body,
-            // );
             // Here make sure , if email is not revecive so no new user create in db
             expect(users).toHaveLength(0);
         });

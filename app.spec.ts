@@ -11,9 +11,6 @@ describe("App", () => {
 
     it("should return 200 status code ", async () => {
         const response = await request(app).get("/").send();
-        // console.log("response ::::::::: ", response);
         expect(response.statusCode).toBe(200);
     });
-
-    it.todo("Will work in test cases");
 });

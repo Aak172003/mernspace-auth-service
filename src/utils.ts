@@ -8,15 +8,10 @@ export const calculateDiscount = (price: number, percentage: number) => {
 export const truncateTables = async (connection: DataSource) => {
     // connection.entityMetadatas -> provide list of all entites
     const entities = connection.entityMetadatas;
-
-    // console.log("entities :::::::: ", entities);
-
     // Loop over entities
     for (const entity of entities) {
         // this will show repository
         const repository = connection.getRepository(entity.name);
-
-        // console.log("repository ::::::::::: ", repository);
         // clear is like clear all the columns
         await repository.clear();
     }
@@ -27,13 +22,11 @@ export const isJWT = (token: string | null): boolean => {
     if (token === null) {
         return false;
     }
-
     // split
     const parts = token.split(".");
     if (parts.length !== 3) {
         return false;
     }
-
     try {
         // As every string is base64 encoded , we just check is every strong is invalid or not
         parts.forEach((part) => {

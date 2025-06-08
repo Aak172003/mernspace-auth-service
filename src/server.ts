@@ -1,12 +1,17 @@
 import { ConfigVariables } from "./config";
 import app from "./app";
 import logger from "./config/logger";
+import { AppDataSource } from "./config/data-source";
 
 console.log("Running on Port ------>>>>>> ", ConfigVariables.PORT);
 
-const startServer = () => {
+const startServer = async () => {
     const PORT = ConfigVariables.PORT;
     try {
+        // Need too create connection with database
+        await AppDataSource.initialize();
+        logger.info("Datbase connect Successfully");
+
         app.listen(PORT, () => {
             logger.info("Server Listening on port", { port: PORT });
             logger.error("We found error ");
@@ -21,4 +26,4 @@ const startServer = () => {
     }
 };
 
-startServer();
+void startServer();
