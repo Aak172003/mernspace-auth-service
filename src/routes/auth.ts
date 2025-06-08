@@ -7,17 +7,23 @@ import logger from "../config/logger";
 import { CredentialService } from "../services/CredentialService";
 // import { body } from "express-validator";
 import registerValidator from "../validators/register-validator";
+import { TokenService } from "../services/TokenService";
+import { RefreshToken } from "../entity/RefreshToken";
 
 const router = express.Router();
 
 const userRepository = AppDataSource.getRepository(User);
 const credentialService = new CredentialService();
 
+const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+
+const tokenService = new TokenService(refreshTokenRepository);
+
 // Dependency injection
 
 const userService = new UserService(userRepository, credentialService);
 
-const authController = new AuthController(userService, logger);
+const authController = new AuthController(userService, logger, tokenService);
 
 // Here bindiing issue occurs if we use authcontroller.register directly because this will not refer actual function , bevause here this refer this line context
 router.post(
