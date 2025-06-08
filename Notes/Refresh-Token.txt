@@ -1,0 +1,28 @@
+If we store access and refresh tokens in cookies, there is a risk they could be stolen.
+To improve security, we refresh the access token by verifying the refresh token — which is stored both in the database and received from the client.
+
+We save the refresh token in the database.
+When a user logs out of the application, the refresh token is deleted from the database.
+However, this alone is not 100% secure.
+
+Token Rotation:
+Each time we refresh the access token, we also generate a new refresh token.
+This process continues until the refresh token reaches its expiry time.
+
+This approach helps us maintain a higher level of security.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Technically we can store big string of refresh token in the database,
+But this is not a good practice , we can optimise this by storing only the id of the refresh token
+
+Create a record in the database for each refresh token
+And then we embeed the id of the refresh token in the cookie 
+
+(So basically when we create a record in refresh-token schema it returns an id , so we just pass that id into refreshtoken , 
+so we can validate is this id exist or not which receive from refresh-token {jwtid})
+
+And then when any refresh token get and it has recod id so we will just check is this record exist in refreshtoken table based on   the id
+If it exists then we will allow the user to refresh the token , It means it is not changed by someone 
+
+If it does not exist then we will not allow the user to refresh the token , it means it is revoke 

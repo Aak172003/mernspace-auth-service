@@ -11,6 +11,8 @@ import { validationResult } from "express-validator";
 import path from "path";
 import createHttpError from "http-errors";
 import { ConfigVariables } from "../config";
+import { RefreshToken } from "../entity/RefreshToken";
+import { AppDataSource } from "../config/data-source";
 
 export class AuthController {
     // userService: UserService;
@@ -102,6 +104,19 @@ export class AuthController {
                 issuer: "auth-service", // which service signs this token
             });
 
+            // Persist the refresh token in the database
+            const refreshTokenRepository =
+                AppDataSource.getRepository(RefreshToken);
+
+            const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365; // One Leap Year
+
+            const newRefreshToken = await refreshTokenRepository.save({
+                user: user,
+                expiresAt: new Date(Date.now() + MS_IN_YEAR),
+            });
+
+            console.log("newRefreshToken :::::::::::::::::: ", newRefreshToken);
+
             const refreshToken = sign(
                 payload,
                 ConfigVariables.REFRESH_SECRET_KEY!,
@@ -109,6 +124,7 @@ export class AuthController {
                     algorithm: "HS256",
                     expiresIn: "1y",
                     issuer: "auth-service",
+                    jwtid: String(newRefreshToken.id), // unique identifier for the refresh token
                 },
             );
 

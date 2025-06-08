@@ -7,6 +7,7 @@ import { AppDataSource } from "../../src/config/data-source";
 import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
 import { isJWT } from "../../src/utils";
+import { RefreshToken } from "../../src/entity/RefreshToken";
 
 // All Test cases group inside describe
 describe("POST /aut/register", () => {
@@ -258,6 +259,35 @@ describe("POST /aut/register", () => {
             // This check is this token is in jwt format or not
             expect(isJWT(accessToken)).toBeTruthy();
             expect(isJWT(refreshToken)).toBeTruthy();
+        });
+
+        it("Should store the refresh token in the database", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            const refreshTokenRepo = connection.getRepository(RefreshToken);
+
+            const refreshTokens = await refreshTokenRepo.find();
+
+            // we just check refreshtoken.userid is exist in user table or not , as response retur user id so we can check that
+            // here i check explicitely that
+            const tokens = await refreshTokenRepo
+                .createQueryBuilder("refreshToken")
+                .where("refreshToken.userId = :userId", {
+                    userId: (response.body as Record<string, string>).id,
+                })
+                .getMany();
+            expect(refreshTokens).toHaveLength(1);
+
+            expect(tokens).toHaveLength(1);
         });
     });
 
