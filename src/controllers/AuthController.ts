@@ -1,9 +1,16 @@
+import fs from "fs";
 import { NextFunction, Response } from "express";
+
 import { RegisterUserRequest } from "../types";
 import { UserService } from "../services/UserService";
 import { Logger } from "winston";
+
+import { JwtPayload, sign } from "jsonwebtoken";
 // import createHttpError from "http-errors";
 import { validationResult } from "express-validator";
+import path from "path";
+import createHttpError from "http-errors";
+import { ConfigVariables } from "../config";
 
 export class AuthController {
     // userService: UserService;
@@ -63,6 +70,66 @@ export class AuthController {
             });
 
             this.logger.info("User has been created ", { id: user.id, user });
+            let privateKey: Buffer;
+
+            try {
+                // Sign the JWT with the private key
+                // Read the private key from the file system
+                // We can use path.join to make sure that it works on all OS
+
+                privateKey = fs.readFileSync(
+                    path.join(__dirname, "../../certs/private.pem"),
+                );
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            } catch (err) {
+                const error = createHttpError(
+                    500,
+                    "Error while reading private Key",
+                );
+                next(error);
+                return;
+            }
+
+            const payload: JwtPayload = {
+                // subject of the token, usually the user ID
+                sub: String(user.id),
+                role: user.role,
+            };
+
+            const accessToken = sign(payload, privateKey, {
+                algorithm: "RS256",
+                expiresIn: "1h",
+                issuer: "auth-service", // which service signs this token
+            });
+
+            const refreshToken = sign(
+                payload,
+                ConfigVariables.REFRESH_SECRET_KEY!,
+                {
+                    algorithm: "HS256",
+                    expiresIn: "1y",
+                    issuer: "auth-service",
+                },
+            );
+
+            res.cookie("accessToken", accessToken, {
+                domain: "localhost",
+
+                sameSite: "strict", // security
+                maxAge: 1000 * 60 * 60, // 1 hour
+                // httpOnly means , this can't access by client side , and only my server can access
+                httpOnly: true,
+            });
+
+            res.cookie("refreshToken", refreshToken, {
+                domain: "localhost",
+
+                sameSite: "strict", // security
+                maxAge: 1000 * 60 * 60 * 24 * 365, // 1 Year
+                // httpOnly means , this can't access by client side , and only my server can access
+                httpOnly: true,
+            });
+
             res.status(201).json({ id: user.id });
         } catch (error) {
             next(error);

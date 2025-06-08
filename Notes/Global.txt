@@ -24,7 +24,6 @@ In express by default every json travel in plain text format
 
 ------------------------------------------------------------------------------------------------------------------------
 
-
 We can make dotenv config read environment varible as dynamically nased on our NODE_ENV it will read environment variable based on NODE_ENV 
 This module path is work dynamically based on operating systems 
 
@@ -41,3 +40,10 @@ const userService = new UserService();
 await userService.create({ firstName, lastName, email, password });
 
 How we can do just create contructor and revice that instace in its contructor
+
+------------------------------------------------------------------------------------------------------------------------
+
+**********************************************************************************************************************************************************************
+If i store tokens in localstorage , so this is less secure as compared to store token in cookies because anyonce can access token from localstorage via using script 
+We are storing tokens in http only cookies which means it can't access by client side with the help of any script , only server can access this cookies 
+**********************************************************************************************************************************************************************
