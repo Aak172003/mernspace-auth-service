@@ -6,6 +6,7 @@ import { AppDataSource } from "../../src/config/data-source";
 // import { truncateTables } from "../../src/utils";
 import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
+import { isJWT } from "../../src/utils";
 
 // All Test cases group inside describe
 describe("POST /aut/register", () => {
@@ -69,11 +70,6 @@ describe("POST /aut/register", () => {
             const response = await request(app)
                 .post("/auth/register")
                 .send(userData);
-
-            // console.log(
-            //     "response.headers ::::::::::::: ",
-            //     response.headers["content-type"],
-            // );
 
             // Here we compare
             // expect(
@@ -224,6 +220,52 @@ describe("POST /aut/register", () => {
             const users = await userRepository.find();
             expect(response.statusCode).toBe(400);
             expect(users).toHaveLength(1);
+        });
+
+        // ---------------------------------------- JWT Token TestCases -------------------------------------------
+
+        it("should return the acess token and refresh token inside a cookie ", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            // let accessToken: string;
+            // let refreshToken: string;
+            let accessToken = null;
+            let refreshToken = null;
+
+            const cookies = response.headers["set-cookie"] || [];
+
+            console.log(
+                "This is cookies ----------------------------------------------------------- ",
+                cookies,
+            );
+            for (const cookie of cookies) {
+                if (cookie.startsWith("accessToken=")) {
+                    accessToken = cookie.split(";")[0].split("=")[1];
+                }
+
+                if (cookie.startsWith("refreshToken=")) {
+                    refreshToken = cookie.split(";")[0].split("=")[1];
+                }
+            }
+            console.log("accessToken : ", accessToken);
+            console.log("refreshToken : ", refreshToken);
+
+            expect(accessToken).not.toBeNull();
+            expect(refreshToken).not.toBeNull();
+
+            // This check is this token is in jwt format or not
+            expect(isJWT(accessToken)).toBeTruthy();
+            expect(isJWT(refreshToken)).toBeTruthy();
         });
     });
 
