@@ -5,6 +5,8 @@ import { Logger } from "winston";
 import { JwtPayload } from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import { TokenService } from "../services/TokenService";
+import createHttpError from "http-errors";
+import { CredentialService } from "../services/CredentialService";
 export class AuthController {
     // userService: UserService;
     // constructor(userService: UserService) {
@@ -15,6 +17,7 @@ export class AuthController {
         private userService: UserService,
         private logger: Logger,
         private tokenService: TokenService,
+        private credentialService: CredentialService,
     ) {
         // this.userService = userService;
     }
@@ -99,6 +102,93 @@ export class AuthController {
             });
 
             res.status(201).json({ id: user.id });
+        } catch (error) {
+            next(error);
+            return;
+        }
+    }
+
+    async login(req: RegisterUserRequest, res: Response, next: NextFunction) {
+        const result = validationResult(req);
+
+        if (!result.isEmpty()) {
+            return res.status(400).json({ errors: result.array() });
+        }
+
+        // We need to tell req.body what kinds of daata you'll receive from frontend
+        const { email, password } = req.body;
+
+        // This is logger
+        this.logger.debug("New request to login a user ", {
+            email,
+            password: "********",
+        });
+
+        // Check if username (email) is already exists
+        // compare password with hashed password
+        // generate access token and refresh token
+        // set tokens to cookies
+        // return the response
+        try {
+            const user = await this.userService.findByEmail(email);
+            if (!user) {
+                const error = createHttpError(
+                    400,
+                    "Email or Password does not match",
+                );
+                next(error);
+                return;
+            }
+
+            const isPasswordValid =
+                await this.credentialService.comparePassword(
+                    password,
+                    user.password,
+                );
+            if (!isPasswordValid) {
+                const error = createHttpError(
+                    400,
+                    "Email or Password does not match",
+                );
+                next(error);
+                return;
+            }
+
+            const payload: JwtPayload = {
+                // subject of the token, usually the user ID
+                sub: String(user.id),
+                role: user.role,
+            };
+
+            const accessToken = this.tokenService.generateAccessToken(payload);
+
+            // Persist the refresh token in the database
+            const newRefreshToken =
+                await this.tokenService.persistRefreshToken(user);
+
+            const refreshToken = this.tokenService.generateRefreshToken({
+                ...payload,
+                id: String(newRefreshToken.id),
+            });
+
+            res.cookie("accessToken", accessToken, {
+                domain: "localhost",
+                sameSite: "strict", // security
+                maxAge: 1000 * 60 * 60, // 1 hour
+                // httpOnly means , this can't access by client side , and only my server can access
+                httpOnly: true,
+            });
+
+            res.cookie("refreshToken", refreshToken, {
+                domain: "localhost",
+                sameSite: "strict", // security
+                maxAge: 1000 * 60 * 60 * 24 * 365, // 1 Year
+                // httpOnly means , this can't access by client side , and only my server can access
+                httpOnly: true,
+            });
+
+            this.logger.info("User has been logged in ", { id: user.id, user });
+            res.status(200).json({ id: user.id, user });
         } catch (error) {
             next(error);
             return;

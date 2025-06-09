@@ -9,6 +9,7 @@ import { CredentialService } from "../services/CredentialService";
 import registerValidator from "../validators/register-validator";
 import { TokenService } from "../services/TokenService";
 import { RefreshToken } from "../entity/RefreshToken";
+import loginValidator from "../validators/login-validator";
 
 const router = express.Router();
 
@@ -23,7 +24,12 @@ const tokenService = new TokenService(refreshTokenRepository);
 
 const userService = new UserService(userRepository, credentialService);
 
-const authController = new AuthController(userService, logger, tokenService);
+const authController = new AuthController(
+    userService,
+    logger,
+    tokenService,
+    credentialService,
+);
 
 // Here bindiing issue occurs if we use authcontroller.register directly because this will not refer actual function , bevause here this refer this line context
 router.post(
@@ -36,6 +42,19 @@ router.post(
     registerValidator,
     async (req: Request, res: Response, next: NextFunction) => {
         await authController.register(req, res, next);
+    },
+);
+
+router.post(
+    "/login",
+    // This is a kinf of middleware , which is basically used to valiate the request paramerter
+    // body("email").notEmpty(),
+    // [body("email").notEmpty(), body("firstName").notEmpty()]
+
+    // After refactoring moved all parameter validators inside seperate file
+    loginValidator,
+    async (req: Request, res: Response, next: NextFunction) => {
+        await authController.login(req, res, next);
     },
 );
 
