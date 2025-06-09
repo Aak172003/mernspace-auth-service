@@ -20,6 +20,7 @@ const {
     REFRESH_SECRET_KEY,
     ACCESS_EXPIRATION_TIME,
     REFRESH_EXPIRATION_TIME,
+    JWKS_URI,
 } = process.env;
 
 export const ConfigVariables = {
@@ -33,4 +34,5 @@ export const ConfigVariables = {
     REFRESH_SECRET_KEY,
     ACCESS_EXPIRATION_TIME,
     REFRESH_EXPIRATION_TIME,
+    JWKS_URI,
 };

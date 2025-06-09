@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import { RegisterUserRequest } from "../types";
+import { NextFunction, Response } from "express";
+import { AuthRequest, RegisterUserRequest } from "../types";
 import { UserService } from "../services/UserService";
 import { Logger } from "winston";
 import { JwtPayload } from "jsonwebtoken";
@@ -195,9 +195,9 @@ export class AuthController {
         }
     }
 
-    self(req: Request, res: Response) {
-        console.log("req.user :::::::::::::: ", req.body);
-
-        res.json({});
+    async self(req: AuthRequest, res: Response) {
+        console.log("req.user :::::::::::::: ", req.auth);
+        const user = await this.userService.findById(Number(req.auth.sub));
+        res.json(user);
     }
 }

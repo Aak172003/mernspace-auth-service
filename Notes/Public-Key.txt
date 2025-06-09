@@ -21,3 +21,13 @@ and we have public key in .pem format so we need to convert this .pem file to hi
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 And this special format is JWK (Json Web Key) or we can say JWKS (Json Web Key Sets ) -> it host our public key in special format 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+express-jwt -> This library is ued to get token from headers or cookies 
+This module provides Express middleware for validating JWTs (JSON Web Tokens) through the jsonwebtoken module. The decoded JWT payload is available on the request object.
+
+jwks-rsa -> This library is used to read the publically available uri to get accesstoken 
+Basically this provide a JWKS endpoint which exposes your signing keys.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
