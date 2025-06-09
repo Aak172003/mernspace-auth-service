@@ -6,10 +6,12 @@ import express, { NextFunction, Request, Response } from "express";
 import logger from "./config/logger";
 import { HttpError } from "http-errors";
 import authRouter from "./routes/auth";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 // Use next error because if we throw error in asynchronous function so global error handler would n't catch this error
 // so to resolve this issue we use next(err)

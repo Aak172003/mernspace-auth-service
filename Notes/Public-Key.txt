@@ -1,0 +1,33 @@
+If we are using micro-service architecture 
+and we are using token based authentication and in this we are using RS256 Algorith 
+So in this algotithm we are using assymetric key concept -> which means we have two keys 
+
+1. Public key -> Publically availabe 
+2. Private key -> Present in server 
+
+so token sign with private key and every server have private key 
+
+The problem with the cookies -> we are using http-only cookies which means access and refresh token which is present inside client cookie 
+(If we are using http-only cookies ) -> which means this cookie not accessible from fronend 
+this is only accessible from server 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+so to validate token we need public key which is need to be publically availabe to every server 
+so to making public key is publically avaible for all server we need to host this public key to any url 
+
+and we have public key in .pem format so we need to convert this .pem file to highly used format which is generally used for communication b/w client and server 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+And this special format is JWK (Json Web Key) or we can say JWKS (Json Web Key Sets ) -> it host our public key in special format 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+express-jwt -> This library is ued to get token from headers or cookies 
+This module provides Express middleware for validating JWTs (JSON Web Tokens) through the jsonwebtoken module. The decoded JWT payload is available on the request object.
+
+jwks-rsa -> This library is used to read the publically available uri to get accesstoken 
+Basically this provide a JWKS endpoint which exposes your signing keys.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------

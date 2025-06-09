@@ -9,3 +9,14 @@ export interface UserData {
 export interface RegisterUserRequest extends Request {
     body: UserData;
 }
+
+// -------------------------------------------------- Mock Server JWKS --------------------------------------------------
+export interface AuthRequest extends Request {
+    auth: {
+        sub: string;
+        role: string;
+    };
+}
+export type AuthCookie = {
+    accessToken: string;
+};
