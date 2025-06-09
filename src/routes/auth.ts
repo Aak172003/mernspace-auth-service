@@ -58,4 +58,8 @@ router.post(
     },
 );
 
+router.get("/self", (req: Request, res: Response) =>
+    authController.self(req, res),
+);
+
 export default router;
