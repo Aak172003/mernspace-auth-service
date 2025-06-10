@@ -1,7 +1,7 @@
+import createJWKSMock from "mock-jwks";
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
 import bcrypt from "bcrypt";
-import createJWKSMock from "mock-jwks";
 import request from "supertest";
 import app from "../../src/app";
 import { Roles } from "../../src/constants";
@@ -140,6 +140,35 @@ describe("POST /aut/self", () => {
 
             // Ensure the response contains the user data
             expect(response.body).not.toHaveProperty("password");
+        });
+
+        it("should 401 status code if token does not exist in cookie", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+            // Create hashed password
+            const hashedPassword = await bcrypt.hash(userData.password, 10);
+            // Create user repository
+            const userRepository = connection.getRepository(User);
+
+            await userRepository.save({
+                ...userData,
+                password: hashedPassword,
+                role: Roles.CUSTOMER,
+            });
+
+            const response = await request(app).get("/auth/self").send();
+
+            // Ensure the response contains the user data
+
+            console.log(
+                "response.statusCoderesponse.statusCode :::::::::::: ",
+                response.statusCode,
+            );
+            expect(response.statusCode).toBe(401);
         });
     });
 
