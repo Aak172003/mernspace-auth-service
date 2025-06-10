@@ -31,3 +31,9 @@ jwks-rsa -> This library is used to read the publically available uri to get acc
 Basically this provide a JWKS endpoint which exposes your signing keys.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+For testing (Jest)
+mock-jwks -> This library is basically used to host our public key 
+
+
+If i go with the manually host public key to server use 
+rsa-pem-to-jwk library -> this will convert .pem extension to .jwks form (json web key sets)
