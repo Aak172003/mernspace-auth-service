@@ -101,11 +101,45 @@ describe("POST /aut/self", () => {
                 .set("Cookie", [`accessToken=${accesstoken};`])
                 .send();
 
+            console.log("Response body -------------- ", response.body);
             expect(response.statusCode).toBe(200);
             // Ensure the response contains the user data
             expect((response.body as Record<string, string>).id).toBe(
                 savedUser.id,
             );
+        });
+
+        it("should not the return password", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+            // Create hashed password
+            const hashedPassword = await bcrypt.hash(userData.password, 10);
+            // Create user repository
+            const userRepository = connection.getRepository(User);
+
+            const savedUser = await userRepository.save({
+                ...userData,
+                password: hashedPassword,
+                role: Roles.CUSTOMER,
+            });
+
+            // Generate a Token
+            const accesstoken = jwks.token({
+                sub: String(savedUser.id),
+                role: savedUser.role,
+            });
+
+            const response = await request(app)
+                .get("/auth/self")
+                .set("Cookie", [`accessToken=${accesstoken};`])
+                .send();
+
+            // Ensure the response contains the user data
+            expect(response.body).not.toHaveProperty("password");
         });
     });
 
