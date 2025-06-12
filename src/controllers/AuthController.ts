@@ -161,11 +161,9 @@ export class AuthController {
             };
 
             const accessToken = this.tokenService.generateAccessToken(payload);
-
             // Persist the refresh token in the database
             const newRefreshToken =
                 await this.tokenService.persistRefreshToken(user);
-
             const refreshToken = this.tokenService.generateRefreshToken({
                 ...payload,
                 id: String(newRefreshToken.id),
@@ -211,24 +209,16 @@ export class AuthController {
         };
 
         // Call the generateAccessToken method and get the token
-
         const accessToken = this.tokenService.generateAccessToken(payload);
-
         // find user , because there is relation between refreshToken and user table
-
         const user = await this.userService.findById(Number(req.auth.sub));
-
         // Find user to delete the refreshToken corresponding to it in database
-
         if (!user) {
             const error = createHttpError(
                 401,
-
                 "User with the token couldn't find",
             );
-
             next(error);
-
             return;
         }
 
@@ -258,7 +248,6 @@ export class AuthController {
             maxAge: 1000 * 60 * 60 * 24 * 365, // 1 Year
             httpOnly: true,
         });
-
         res.json({ id: user.id });
     }
 }
