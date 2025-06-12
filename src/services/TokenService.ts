@@ -32,7 +32,7 @@ export class TokenService {
 
         const accessToken = sign(payload, privateKey, {
             algorithm: "RS256",
-            expiresIn: "1h",
+            expiresIn: "1m",
             issuer: "auth-service", // which service signs this token
         });
         return accessToken;
@@ -44,7 +44,7 @@ export class TokenService {
             ConfigVariables.REFRESH_SECRET_KEY!,
             {
                 algorithm: "HS256",
-                expiresIn: "1y",
+                expiresIn: "1h",
                 issuer: "auth-service",
                 jwtid: String(payload.id), // unique identifier for the refresh token
             },
@@ -59,5 +59,12 @@ export class TokenService {
             expiresAt: new Date(Date.now() + MS_IN_YEAR),
         });
         return newRefreshToken;
+    }
+
+    async deleteRefreshToken(tokenId: number) {
+        const deletedRefreshToken = await this.refreshTokenRepository.delete({
+            id: tokenId,
+        });
+        return deletedRefreshToken;
     }
 }
