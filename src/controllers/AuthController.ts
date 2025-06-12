@@ -161,11 +161,9 @@ export class AuthController {
             };
 
             const accessToken = this.tokenService.generateAccessToken(payload);
-
             // Persist the refresh token in the database
             const newRefreshToken =
                 await this.tokenService.persistRefreshToken(user);
-
             const refreshToken = this.tokenService.generateRefreshToken({
                 ...payload,
                 id: String(newRefreshToken.id),
@@ -199,5 +197,57 @@ export class AuthController {
         console.log("req.user :::::::::::::: ", req.auth);
         const user = await this.userService.findById(Number(req.auth.sub));
         res.json({ ...user, password: undefined });
+    }
+
+    async refreshToken(req: AuthRequest, res: Response, next: NextFunction) {
+        console.log("req.auth :::::::::::::: ", req.auth);
+
+        // Prepare payload for accessToken
+        const payload: JwtPayload = {
+            sub: req.auth.sub,
+            role: req.auth.role,
+        };
+
+        // Call the generateAccessToken method and get the token
+        const accessToken = this.tokenService.generateAccessToken(payload);
+        // find user , because there is relation between refreshToken and user table
+        const user = await this.userService.findById(Number(req.auth.sub));
+        // Find user to delete the refreshToken corresponding to it in database
+        if (!user) {
+            const error = createHttpError(
+                401,
+                "User with the token couldn't find",
+            );
+            next(error);
+            return;
+        }
+
+        // This concept is Token Rotation
+        // Persist the refreshToken
+        const newRefreshToken =
+            await this.tokenService.persistRefreshToken(user);
+
+        // delete the old refreshToken
+        await this.tokenService.deleteRefreshToken(Number(req.auth?.id));
+
+        const refreshToken = this.tokenService.generateRefreshToken({
+            ...payload,
+            id: String(newRefreshToken.id),
+        });
+        res.cookie("accessToken", accessToken, {
+            domain: "localhost",
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60, // 1 hour
+            // httpOnly means , that can access only by our server not access by client side
+            httpOnly: true,
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+            domain: "localhost",
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60 * 24 * 365, // 1 Year
+            httpOnly: true,
+        });
+        res.json({ id: user.id });
     }
 }
