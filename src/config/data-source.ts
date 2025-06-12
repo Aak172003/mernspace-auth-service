@@ -28,10 +28,10 @@ export const AppDataSource = new DataSource({
     //     ConfigVariables.NODE_ENV === "test" ||
     //     ConfigVariables.NODE_ENV === "dev",
 
-    synchronize: true,
+    // synchronize: true,
     // because manually in all test cases we already syncing with our database ,
     // That's why we make false her
-    // synchronize: false,
+    synchronize: false,
     logging: false,
 
     // this is wild card pattern . here src/entity/*.ts -> * means any filename with .ts extension from src/entity directory
