@@ -1,0 +1,19 @@
+Before this we setup migration into code 
+
+"typeorm": "typeorm-ts-node-commonjs",
+
+Script to generate migration file
+"migration:generate": "npm run typeorm -- migration:generate src/migration/migration -d src/config/data-source.ts",
+
+Script to run or up migration file 
+"migration:run": "npm run typeorm -- migration:run -d src/config/data-source.ts"
+
+---------------------------------------------------------------------------------------------------------------------
+
+This is how run migration file 
+npm run migration:generate
+
+This is how run or up migration file 
+npm run migration:run
+
+
