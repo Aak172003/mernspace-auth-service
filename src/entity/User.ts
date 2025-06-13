@@ -6,7 +6,7 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 
-@Entity()
+@Entity({ name: "users" })
 export class User {
     // This means it is unique and index apply on this id, also it will auto-increment
     @PrimaryGeneratedColumn()

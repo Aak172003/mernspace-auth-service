@@ -20,7 +20,7 @@ import { User } from "./User";
 // If it exists then we will allow the user to refresh the token
 // If it does not exist then we will not allow the user to refresh the token
 
-@Entity()
+@Entity({ name: "refreshTokens" })
 export class RefreshToken {
     @PrimaryGeneratedColumn()
     id: number;
