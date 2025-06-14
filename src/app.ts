@@ -6,6 +6,7 @@ import express, { NextFunction, Request, Response } from "express";
 import logger from "./config/logger";
 import { HttpError } from "http-errors";
 import authRouter from "./routes/auth";
+import tenantRouter from "./routes/tenant";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -32,6 +33,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/auth", authRouter);
+app.use("/tenants", tenantRouter);
 
 // Global Middleware -> which automatically execute whenever we hit any api endpoint
 // Global error Handler
