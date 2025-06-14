@@ -21,6 +21,7 @@ const {
     ACCESS_EXPIRATION_TIME,
     REFRESH_EXPIRATION_TIME,
     JWKS_URI,
+    PRIVATE_KEY,
 } = process.env;
 
 export const ConfigVariables = {
@@ -35,4 +36,5 @@ export const ConfigVariables = {
     ACCESS_EXPIRATION_TIME,
     REFRESH_EXPIRATION_TIME,
     JWKS_URI,
+    PRIVATE_KEY,
 };
