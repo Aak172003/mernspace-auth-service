@@ -13,7 +13,7 @@
       "prepare": "husky",
       "start": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs",
-      "migration:generate": "npm run typeorm -- migration:generate src/migration/rename_tables -d src/config/data-source.ts",
+      "migration:generate": "npm run typeorm -- migration:generate src/migration/add_tenantId_as_foreign_key -d src/config/data-source.ts",
       "migration:run": "npm run typeorm -- migration:run -d src/config/data-source.ts"
    },
    "author": "Aakash Prajapati <prajapatiaakash364@gmail.com>",
