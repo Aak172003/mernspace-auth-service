@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { UserData } from "../types";
+import { LimitedUserData, UserData } from "../types";
 import createHttpError from "http-errors";
 import { CredentialService } from "./CredentialService";
 
@@ -10,7 +10,14 @@ export class UserService {
         private userRepository: Repository<User>,
         private credentialService: CredentialService,
     ) {}
-    async create({ firstName, lastName, email, password, role }: UserData) {
+    async create({
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        tenantId,
+    }: UserData) {
         // Find any user is already register with the email id or not
         const findUser = await this.userRepository.findOne({
             where: { email: email },
@@ -47,6 +54,7 @@ export class UserService {
                 email,
                 password: hashedPassword,
                 role,
+                tenant: tenantId ? { id: tenantId } : undefined,
             });
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
@@ -68,17 +76,62 @@ export class UserService {
         }
     }
 
-    async findByEmail(email: string) {
+    async findByEmailWithPassword(email: string) {
+        // As in user entity we have password column which i make select false so it will not return password
+        // so we need to mention explicitly that we need password also
         const user = await this.userRepository.findOne({
             where: { email },
+            select: [
+                "id",
+                "firstName",
+                "lastName",
+                "email",
+                "password",
+                "role",
+            ],
         });
 
         return user;
     }
+
     async findById(user_id: number) {
         const user = await this.userRepository.findOne({
             where: { id: user_id },
         });
         return user;
+    }
+
+    async update(
+        userId: number,
+        { firstName, lastName, role }: LimitedUserData,
+    ) {
+        try {
+            const updatUser = await this.userRepository.update(userId, {
+                firstName,
+                lastName,
+                role,
+            });
+
+            console.log(
+                "updatUser form user service ================== ",
+                updatUser,
+            );
+
+            return updatUser;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (err) {
+            const error = createHttpError(
+                500,
+                "Failed to update the user in the database",
+            );
+            throw error;
+        }
+    }
+    async getAll() {
+        return await this.userRepository.find();
+    }
+
+    async deleteById(userId: number) {
+        return await this.userRepository.delete(userId);
     }
 }

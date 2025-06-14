@@ -157,7 +157,7 @@ describe("POST /aut/register", () => {
 
             // const users = await userRepository.find();
 
-            // explicitely i mention that get only password
+            // explicitely i mention that i need only password
             const users = await userRepository.find({ select: ["password"] });
 
             expect(users[0].password).not.toBe(userData.password);

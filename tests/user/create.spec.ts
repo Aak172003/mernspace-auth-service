@@ -5,6 +5,8 @@ import createJWKSMock from "mock-jwks";
 import { Roles } from "../../src/constants";
 import app from "../../src/app";
 import { User } from "../../src/entity/User";
+import { Tenant } from "../../src/entity/Tenant";
+import { createTenant } from "../../src/utils";
 
 describe("POST /users", () => {
     let connection: DataSource;
@@ -45,6 +47,11 @@ describe("POST /users", () => {
     // Happy Path -> Basically means (Given all fields)
     describe("Given all fields", () => {
         it("should persist the user in the database", async () => {
+            // So before creating any mangaer first we need to get first tenant from the tenant database
+            // Create a dummy tenant
+
+            const tenant = await createTenant(connection.getRepository(Tenant));
+
             const adminToken = jwks.token({
                 sub: "1",
                 role: Roles.ADMIN,
@@ -56,7 +63,7 @@ describe("POST /users", () => {
                 email: "rakesh@mern.space",
                 password: "secret",
                 role: Roles.MANAGER,
-                tenantId: 1,
+                tenantId: tenant.id,
             };
 
             const response = await request(app)
@@ -76,6 +83,8 @@ describe("POST /users", () => {
         });
 
         it("should create manager user", async () => {
+            const tenant = await createTenant(connection.getRepository(Tenant));
+
             const adminToken = jwks.token({
                 sub: "1",
                 role: Roles.ADMIN,
@@ -88,7 +97,7 @@ describe("POST /users", () => {
                 email: "arjun@mern.space",
                 password: "secret",
                 role: Roles.MANAGER,
-                tenantId: 1,
+                tenantId: tenant.id,
             };
             const response = await request(app)
                 .post("/users")
