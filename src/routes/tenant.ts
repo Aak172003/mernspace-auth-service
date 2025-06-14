@@ -5,6 +5,8 @@ import { Tenant } from "../entity/Tenant";
 import { TenantService } from "../services/TenantService";
 import logger from "../config/logger";
 import { CreateTenantRequest } from "../types";
+import authenticate from "../middlewares/authenticate";
+import tenantValidator from "../validators/tenant-validator";
 
 const router = express.Router();
 
@@ -16,6 +18,8 @@ const tenantController = new TenantController(tenantService, logger);
 
 router.post(
     "/",
+    authenticate,
+    tenantValidator,
     async (req: CreateTenantRequest, res: Response, next: NextFunction) => {
         await tenantController.create(req, res, next);
     },
