@@ -8,6 +8,7 @@ import { HttpError } from "http-errors";
 import authRouter from "./routes/auth";
 import tenantRouter from "./routes/tenant";
 import cookieParser from "cookie-parser";
+import userRouter from "./routes/user";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/auth", authRouter);
 app.use("/tenants", tenantRouter);
+app.use("/users", userRouter);
 
 // Global Middleware -> which automatically execute whenever we hit any api endpoint
 // Global error Handler
