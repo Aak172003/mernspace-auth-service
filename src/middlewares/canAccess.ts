@@ -4,13 +4,9 @@ import createHttpError from "http-errors";
 
 export const canAccess = (roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        console.log("roles =================== ", roles);
-
         const new_req = req as AuthRequest;
 
         const roleFromToken = new_req.auth.role;
-
-        console.log("roleFromToken =================== ", roleFromToken);
 
         if (!roles.includes(roleFromToken)) {
             const error = createHttpError(

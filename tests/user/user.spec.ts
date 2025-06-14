@@ -163,11 +163,6 @@ describe("POST /aut/self", () => {
             const response = await request(app).get("/auth/self").send();
 
             // Ensure the response contains the user data
-
-            console.log(
-                "response.statusCoderesponse.statusCode :::::::::::: ",
-                response.statusCode,
-            );
             expect(response.statusCode).toBe(401);
         });
     });

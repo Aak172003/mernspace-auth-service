@@ -112,11 +112,6 @@ export class UserService {
                 role,
             });
 
-            console.log(
-                "updatUser form user service ================== ",
-                updatUser,
-            );
-
             return updatUser;
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {

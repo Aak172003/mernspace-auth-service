@@ -15,12 +15,8 @@ export default expressjwt({
     secret: ConfigVariables.REFRESH_SECRET_KEY!,
     algorithms: ["HS256"],
     getToken(req: Request) {
-        console.log("1111111111111111111111111111111");
         const { refreshToken } = req.cookies as AuthCookie;
-        console.log(
-            "this is refreshToken ----- from validateRefreshToken --- ",
-            refreshToken,
-        );
+
         return refreshToken;
     },
 
@@ -30,8 +26,6 @@ export default expressjwt({
     // if not means user already revoked or logout
 
     async isRevoked(request: Request, token) {
-        console.log("token", token);
-
         try {
             const refreshTokenRepo = AppDataSource.getRepository(RefreshToken);
 

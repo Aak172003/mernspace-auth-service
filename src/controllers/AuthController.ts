@@ -197,14 +197,11 @@ export class AuthController {
     }
 
     async self(req: AuthRequest, res: Response) {
-        console.log("req.user :::::::::::::: ", req.auth);
         const user = await this.userService.findById(Number(req.auth.sub));
         res.json({ ...user, password: undefined });
     }
 
     async refreshToken(req: AuthRequest, res: Response, next: NextFunction) {
-        console.log("req.auth :::::::::::::: ", req.auth);
-
         // Prepare payload for accessToken
         const payload: JwtPayload = {
             sub: req.auth.sub,

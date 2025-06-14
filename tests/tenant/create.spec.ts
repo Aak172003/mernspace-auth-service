@@ -79,8 +79,6 @@ describe("POST /tenants", () => {
             const tenantRepository = connection.getRepository(Tenant);
             const tenants = await tenantRepository.find();
 
-            console.log("tenants : ", tenants);
-
             // here we check if the tenant is created in the database
             expect(tenants).toHaveLength(1);
 
@@ -101,8 +99,6 @@ describe("POST /tenants", () => {
 
             const tenantRepository = connection.getRepository(Tenant);
             const tenants = await tenantRepository.find();
-
-            console.log("tenants : ", tenants);
 
             // here we check if the tenant is created in the database
             expect(tenants).toHaveLength(0);
@@ -133,7 +129,6 @@ describe("POST /tenants", () => {
             const tenantRepository = connection.getRepository(Tenant);
             const tenants = await tenantRepository.find();
 
-            console.log("tenants : ", tenants);
             expect(tenants).toHaveLength(0);
         });
     });

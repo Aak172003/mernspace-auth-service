@@ -13,5 +13,4 @@ const jwks = rsaPemToJwk(
     "public",
 );
 
-console.log("this is jwk -------------- ", jwks);
 console.log("change format ", JSON.stringify(jwks));
