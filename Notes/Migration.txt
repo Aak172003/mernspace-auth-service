@@ -5,6 +5,7 @@ Before this we setup migration into code
 Script to generate migration file
 "migration:generate": "npm run typeorm -- migration:generate src/migration/migration -d src/config/data-source.ts",
 
+
 Script to run or up migration file 
 "migration:run": "npm run typeorm -- migration:run -d src/config/data-source.ts"
 
@@ -16,4 +17,10 @@ npm run migration:generate
 This is how run or up migration file 
 npm run migration:run
 
+------------------------------------------------------------------------------------------
+Inside Package.json file
+"migration:create": "npm run typeorm -- migration:create"
 
+
+This is how we create a migration file with dynamic name 
+npm run migration:create -- src/migration/test_dynamic_migration
