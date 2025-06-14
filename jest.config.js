@@ -25,5 +25,4 @@ module.exports = {
     // collect coverage of code not from test folder and node_modules folder
     // ! -> exclude folder
     collectCoverageFrom: ["src/**/*.ts", "!tests/**", "!**/node_modules/**"],
-
 };
