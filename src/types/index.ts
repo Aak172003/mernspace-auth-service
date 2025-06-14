@@ -5,6 +5,9 @@ export interface UserData {
     email: string;
     password: string;
     role: string;
+    // ? represents that it is optional
+    // also this is required only when admin create any manager user
+    tenantId?: number;
 }
 export interface RegisterUserRequest extends Request {
     body: UserData;
