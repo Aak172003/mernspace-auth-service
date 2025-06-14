@@ -48,7 +48,6 @@ router.get(
     "/:tenantId",
     authenticate,
     canAccess([Roles.ADMIN]),
-    tenantValidator,
     async (req: Request, res: Response, next: NextFunction) => {
         await tenantController.getOne(req, res, next);
     },
