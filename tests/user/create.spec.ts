@@ -1,0 +1,111 @@
+import { DataSource } from "typeorm";
+import { AppDataSource } from "../../src/config/data-source";
+import request from "supertest";
+import createJWKSMock from "mock-jwks";
+import { Roles } from "../../src/constants";
+import app from "../../src/app";
+import { User } from "../../src/entity/User";
+
+describe("POST /users", () => {
+    let connection: DataSource;
+    let jwks: ReturnType<typeof createJWKSMock>;
+
+    // This will execute before all test case execution
+    beforeAll(async () => {
+        jwks = createJWKSMock("http://localhost:5501");
+
+        connection = await AppDataSource.initialize();
+    });
+
+    // This execute before each test case run
+    beforeEach(async () => {
+        jwks.start();
+
+        // here we drop the database and synchronize the database manually
+        await connection.dropDatabase();
+        await connection.synchronize();
+
+        // Database Truncate
+        // await truncateTables(connection);
+    });
+
+    afterEach(() => {
+        jwks.stop();
+    });
+
+    // This will execute after all test cases run
+    afterAll(async () => {
+        // await connection.destroy();
+        if (connection) {
+            await connection.destroy();
+        } else {
+            console.error("Connection is undefined during afterAll");
+        }
+    });
+    // Happy Path -> Basically means (Given all fields)
+    describe("Given all fields", () => {
+        it("should persist the user in the database", async () => {
+            const adminToken = jwks.token({
+                sub: "1",
+                role: Roles.ADMIN,
+            });
+
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+                role: Roles.MANAGER,
+                tenantId: 1,
+            };
+
+            const response = await request(app)
+                .post("/users")
+                .set("Cookie", [`accessToken=${adminToken};`])
+                .send(userData);
+
+            const userRepository = connection.getRepository(User);
+
+            const users = await userRepository.find();
+
+            expect(response.statusCode).toBe(201);
+            expect(users).toHaveLength(1);
+
+            // expect(users[0].role).toBe(Roles.MANAGER);
+            expect(users[0].email).toBe(userData.email);
+        });
+
+        it("should create manager user", async () => {
+            const adminToken = jwks.token({
+                sub: "1",
+                role: Roles.ADMIN,
+            });
+
+            // Arrange the data
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "arjun@mern.space",
+                password: "secret",
+                role: Roles.MANAGER,
+                tenantId: 1,
+            };
+            const response = await request(app)
+                .post("/users")
+                .set("Cookie", [`accessToken=${adminToken};`])
+                .send(userData);
+
+            const userRepository = connection.getRepository(User);
+
+            const users = await userRepository.find();
+
+            expect(response.statusCode).toBe(201);
+            expect(users).toHaveLength(1);
+            expect(users[0].role).toBe(Roles.MANAGER);
+        });
+        it("should return 403 if non admin tries to create a user", async () => {});
+    });
+
+    // Sad Path -> Basically means (Fields are missing)
+    describe("Fields are missing", () => {});
+});
