@@ -7,6 +7,7 @@ import { validationResult } from "express-validator";
 import { TokenService } from "../services/TokenService";
 import createHttpError from "http-errors";
 import { CredentialService } from "../services/CredentialService";
+import { ResponseMessage } from "../constants/responseMessage";
 export class AuthController {
     // userService: UserService;
     // constructor(userService: UserService) {
@@ -266,7 +267,7 @@ export class AuthController {
 
             res.json({
                 success: "true",
-                message: "Logged out successfully",
+                message: ResponseMessage.LOGOUT_SUCCESSFULLY,
             });
         } catch (error) {
             next(error);

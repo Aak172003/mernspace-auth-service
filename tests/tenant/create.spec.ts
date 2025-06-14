@@ -108,6 +108,34 @@ describe("POST /tenants", () => {
             expect(tenants).toHaveLength(0);
             expect(response.statusCode).toBe(401);
         });
+
+        // Permission issue
+
+        it("should return 403 if user is not an Admin", async () => {
+            // Generate Managaer Token
+            const managerToken = jwks.token({
+                sub: "1",
+                role: Roles.MANAGER,
+            });
+
+            const tenantData = {
+                name: "Tenant 1",
+                address: "Address 1",
+            };
+
+            const response = await request(app)
+                .post("/tenants")
+                .set("Cookie", [`accessToken=${managerToken};`])
+                .send(tenantData);
+
+            expect(response.statusCode).toBe(403);
+
+            const tenantRepository = connection.getRepository(Tenant);
+            const tenants = await tenantRepository.find();
+
+            console.log("tenants : ", tenants);
+            expect(tenants).toHaveLength(0);
+        });
     });
 
     // Sad Path -> Basically means (Fields are missing)

@@ -7,6 +7,8 @@ import logger from "../config/logger";
 import { CreateTenantRequest } from "../types";
 import authenticate from "../middlewares/authenticate";
 import tenantValidator from "../validators/tenant-validator";
+import { canAccess } from "../middlewares/canAccess";
+import { Roles } from "../constants";
 
 const router = express.Router();
 
@@ -19,6 +21,7 @@ const tenantController = new TenantController(tenantService, logger);
 router.post(
     "/",
     authenticate,
+    canAccess([Roles.ADMIN]),
     tenantValidator,
     async (req: CreateTenantRequest, res: Response, next: NextFunction) => {
         await tenantController.create(req, res, next);
