@@ -1,0 +1,41 @@
+We need to create a production level docker file 
+
+Because in dev ( the image contains typerscript our code also it contains compiler ts code in it)
+So because of this it increase the image size so to decrease the image size 
+
+we don't need copy whole src folder , we just copy our ts compiled code (like this will get after build our project)
+This is compiled version of this project 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🔍 npm ci - What It Does
+npm ci is used to install dependencies in a clean, consistent way:
+
+1. It uses the package-lock.json file to install exact versions.
+2. It removes the node_modules folder if it exists before installation.
+3. It is faster and more reliable for CI/CD and Docker because it doesn't do any package resolution — just installs exactly what is specified in package-lock.json.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+🔍 npm ci --ignore-scripts - What It Does
+
+1. Basically when we have any 3rd parties script inside package.json file
+2. So this will automatically run when we execute npm i  or in container npm ci
+3. So we need to ignore this script
+4. So we are using --ignore-scripts flag to ignore this script
+5. Also it will install only dependencies not dev-dependencies
+6. due to this our image size will automatically reduce
+
+7. If we don't pass NODE_ENV = production so we can also ignore dev-dependencies to install using below command
+8. RUN npm ci --ignore-scripts --omit=dev
+9. --omit=dev -> this will ignore dev-dependencies
+
+
+RUN npm ci --ignore-scripts 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This is how we run prodction docker image 
+docker build -t mernstack_test_prod_image -f docker/prod/Dockerfile . 
