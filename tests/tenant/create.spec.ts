@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
 import request from "supertest";
 import app from "../../src/app";
+import { Tenant } from "../../src/entity/Tenant";
 
 describe("POST /tenants", () => {
     let connection: DataSource;
@@ -42,6 +43,27 @@ describe("POST /tenants", () => {
                 .send(tenantData);
 
             expect(response.statusCode).toBe(201);
+        });
+
+        it("should create tenant in the database", async () => {
+            const tenantData = {
+                name: "Tenant 1",
+                address: "Address 1",
+            };
+
+            await request(app).post("/tenants").send(tenantData);
+
+            const tenantRepository = connection.getRepository(Tenant);
+            const tenants = await tenantRepository.find();
+
+            console.log("tenants : ", tenants);
+
+            // here we check if the tenant is created in the database
+            expect(tenants).toHaveLength(1);
+
+            // here we check database create same data as we send in the request
+            expect(tenants[0].name).toBe(tenantData.name);
+            expect(tenants[0].address).toBe(tenantData.address);
         });
     });
 
