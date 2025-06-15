@@ -2,8 +2,8 @@ Use supabase as a test database
 
 SupaBase Credentials -------------------------------
 
-host : db.pbwplpcmhzwbxlcuhnmc.supabase.co
+host : db.ovvvvimrhczzbggphctj.supabase.co
 port : 5432
 database : postgres
 user : postgres
-password : RFkedjdD5vQhk52I
+password : 5H4Co2aFmRKy6dKv
