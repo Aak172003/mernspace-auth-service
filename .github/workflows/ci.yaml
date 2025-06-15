@@ -1,0 +1,77 @@
+# every jobs execute in a separate context
+
+name: CI
+
+# This is the triggers block.
+# It is used to trigger the workflow when a pull request or push is made to the main branch.
+on:
+    pull_request:
+        branches:
+            - main
+    push:
+        branches:
+            - main
+
+# Group multiple job in a jobs group.
+jobs:
+    build-and-test:
+        name: Build the project
+        # Run on which machine
+        runs-on: ubuntu-latest
+        steps:
+            # Checkout the code from the repository , and download our code to run
+            - uses: actions/checkout@v3
+            # Install dependencies
+            - name: Install dependencies
+              run: npm ci
+            # Run esLint
+            - name: Run esLint
+              run: npm run lint
+            # Run tests
+            - name: Test and Coverage
+              run: npm run test
+              env:
+                  DB_HOST: ${{ secrets.TEST_DB_HOST }}
+                  DB_PORT: ${{ secrets.TEST_DB_PORT }}
+                  DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
+                  DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+                  DB_NAME: ${{ secrets.TEST_DB_NAME }}
+                  REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
+                  JWKS_URI: ${{ secrets.JWKS_URI }}
+                  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+            - name: Build TypeScript
+              run: npm run build
+            - name: SonarCloud Scan
+              uses: SonarSource/sonarcloud-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    build-and-push-docker:
+        name: Build and Push Docker Image
+        # Wait for the build-and-test job to complete
+        needs: build-and-test
+        runs-on: ubuntu-latest
+        env:
+            IMAGE_NAME: aakash1707/mernspace-auth-service
+            # Build number is a unique number for each build , which is used to tag the image
+            # aakash1707/mernspace-auth-service:build-${build_number} , this build number is provided by github
+            IMAGE_TAG: build-${{ github.run_number }}
+        # Only run this job if the push is to the main branch , we are only considering the main branch for deployment
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+              # checkout the code from the repository
+              # and login to docker hub
+            - name: Log into Docker Hub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_PASSWORD }}
+            # Here we are building the docker image
+            - name: Build Docker Image
+              run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
+            # Here we are pushing the docker image to docker hub
+            - name: Push Docker Image to Docker Hub
+              run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
