@@ -36,7 +36,7 @@ this process is called Bind Mounts
 
 docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env.dev -p 5501:5501 -e NODE_ENV=development mernspace-auth-service:dev
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 
 ********** 
 
@@ -45,7 +45,7 @@ this script is used to sync between local and git repo , if i change any thing i
 
 "dev": "nodemon src/server.ts --legacy-watch",
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
 
 Volume Mount : 
 To create persistant data volume in docker to persist data even if we restart the postgres container 
