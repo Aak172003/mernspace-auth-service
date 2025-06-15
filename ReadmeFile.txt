@@ -42,3 +42,5 @@ create docker file for dev and production
 In production i use multi-staged system 
 
 
+Use supabase 
+use sonarqube for static code analysis
