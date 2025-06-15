@@ -29,13 +29,22 @@ jobs:
               run: npm run lint:check
             # Run tests
             - name: Test and Coverage
-              run: npm run test
+              run: |
+                echo "DB_HOST: ${{ secrets.DB_HOST }}"
+                echo "DB_PORT: ${{ secrets.DB_PORT }}"
+                echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+                echo "DB_PASSWORD: ${{ secrets.DB_PASSWORD }}"
+                echo "DB_NAME: ${{ secrets.DB_NAME }}"
+                echo "REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}"
+                echo "JWKS_URI: ${{ secrets.JWKS_URI }}"
+                echo "PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}"
+                npm run test
               env:
-                  DB_HOST: ${{ secrets.TEST_DB_HOST }}
-                  DB_PORT: ${{ secrets.TEST_DB_PORT }}
-                  DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
-                  DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
-                  DB_NAME: ${{ secrets.TEST_DB_NAME }}
+                  DB_HOST: ${{ secrets.DB_HOST }}
+                  DB_PORT: ${{ secrets.DB_PORT }}
+                  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+                  DB_NAME: ${{ secrets.DB_NAME }}
                   REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
                   JWKS_URI: ${{ secrets.JWKS_URI }}
                   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

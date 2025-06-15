@@ -6,4 +6,4 @@ host : db.pbwplpcmhzwbxlcuhnmc.supabase.co
 port : 5432
 database : postgres
 user : postgres
-password : fuiMZOZyNkmYqgqX
+password : RFkedjdD5vQhk52I
