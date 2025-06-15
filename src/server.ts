@@ -9,6 +9,7 @@ const startServer = async () => {
     const PORT = ConfigVariables.PORT;
     try {
         // Need too create connection with database
+        console.log("Database connecting...");
         await AppDataSource.initialize();
         logger.info("Datbase connect Successfully");
 
@@ -22,6 +23,9 @@ const startServer = async () => {
         });
     } catch (error) {
         console.log(error);
+        console.log("error in server.ts file");
+        logger.error("Error in server.ts file", { error });
+        // Exit process with failure
         process.exit(1);
     }
 };

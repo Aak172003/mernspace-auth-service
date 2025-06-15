@@ -34,7 +34,7 @@ this process is called Bind Mounts
 6. -p 5501:5501 -> PORT mapping or port binding ( left side is our hoast machine port , right side is docker( conatiner running on which port or application running on which port) )
 7. -e NODE_ENV=development -> this is how we pass environment variable 
 
-docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env -p 5501:5501 -e NODE_ENV=development mernspace-auth-service:dev
+docker run --rm -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules --env-file ${PWD}/.env.dev -p 5501:5501 -e NODE_ENV=development mernspace-auth-service:dev
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

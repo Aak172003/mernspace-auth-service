@@ -33,3 +33,19 @@ crate persistant data volume in docker to persist data even if we restart the po
 Make Less dependent , so we use dependency injection 
 
 Use express validator to validate request parameter 
+
+
+
+Learn How to decrease the docker image container size 
+
+create docker file for dev and production 
+In production i use multi-staged system 
+
+
+Use supabase as a test database
+
+
+host : db.pbwplpcmhzwbxlcuhnmc.supabase.co
+port : 5432
+database : postgres
+user : postgres
