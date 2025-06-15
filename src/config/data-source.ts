@@ -4,6 +4,10 @@ import { ConfigVariables } from ".";
 
 const { DB_HOST, DB_NAME, DB_PASSWORD, DB_USERNAME } = ConfigVariables;
 console.log("DB_NAME :::::::::: ", DB_NAME);
+console.log("DB_HOST :::::::::: ", DB_HOST);
+console.log("DB_USERNAME :::::::::: ", DB_USERNAME);
+console.log("DB_PASSWORD :::::::::: ", DB_PASSWORD);
+
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: DB_HOST,
