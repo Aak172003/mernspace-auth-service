@@ -42,10 +42,3 @@ create docker file for dev and production
 In production i use multi-staged system 
 
 
-Use supabase as a test database
-
-
-host : db.pbwplpcmhzwbxlcuhnmc.supabase.co
-port : 5432
-database : postgres
-user : postgres

@@ -1,0 +1,17 @@
+Sonar is a static analysizer tool 
+It will analyse the code and tell problems
+ 
+Sonar have basically two types of instance
+ 
+1. SonarCloud -> in this they managed by owns and they provide subscription
+ 
+2. SonarQube -> manually we can use but to use this we need to make our repository private
+ 
+------------------------------------------------------------------------------------------------------------
+ 
+Hence we are using SonarQube to perform static analysis
+ 
+sonarcloud.io/projects
+
+This is token 
+0e6edb0489d33405cf5e4c9cd370b86015e0b1c4
