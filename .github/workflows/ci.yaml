@@ -1,4 +1,4 @@
-# every jobs execute in a separate context
+# Every job executes in a separate context
 
 name: CI
 
@@ -13,23 +13,27 @@ on:
         branches:
             - main
 
-# Group multiple job in a jobs group.
+# Group multiple jobs in a jobs group.
 jobs:
     build-and-test:
         name: Build the project
-        # Run on which machine
         runs-on: ubuntu-latest
+
         steps:
-            # Checkout the code from the repository , and download our code to run
-            - uses: actions/checkout@v3
+            # Checkout the code from the repository
+            - name: Checkout Code
+              uses: actions/checkout@v3
 
             # Install dependencies
             - name: Install Dependencies
               run: npm ci
 
-            # Run esLint
-            - name: Run EsLint
+            # Run ESLint
+            - name: Run ESLint
               run: npm run lint:check
+
+            # Read Secrets Keys
+            - name: Read Secret Keys
               env:
                   DB_HOST: ${{ secrets.DB_HOST }}
                   DB_PORT: ${{ secrets.DB_PORT }}
@@ -39,23 +43,28 @@ jobs:
                   REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
                   JWKS_URI: ${{ secrets.JWKS_URI }}
                   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-
-            - name: Read Secrets Keys
               run: |
                   if [ "$DB_NAME" == "postgres" ]; then
-                    echo "Got the secret token"
+                    echo "✅ DB_NAME matches postgres"
+                  else
+                    echo "❌ DB_NAME does not match postgres"
                   fi
+
                   if [ "$DB_PASSWORD" == "5H4Co2aFmRKy6dKv" ]; then
-                    echo "Got the secret password"
+                    echo "✅ DB_PASSWORD matches expected secret"
+                  else
+                    echo "❌ DB_PASSWORD does not match expected secret"
                   fi
 
             # Run tests
             - name: Test and Coverage
               run: npm run test
 
+            # Build TypeScript
             - name: Build TypeScript
               run: npm run build
 
+            # SonarCloud Scan
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:
@@ -64,34 +73,29 @@ jobs:
 
     build-and-push-docker:
         name: Build and Push Docker Image
-        # Wait for the build-and-test job to complete
         needs: build-and-test
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
             IMAGE_NAME: aakash1707/mernspace-auth-service
-            # Build number is a unique number for each build , which is used to tag the image
-            # aakash1707/mernspace-auth-service:build-${build_number} , this build number is provided by github
             IMAGE_TAG: build-${{ github.run_number }}
 
-        # Only run this job if the push is to the main branch , we are only considering the main branch for deployment
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
         steps:
+            # Checkout the code from the repository
             - name: Checkout Repository
               uses: actions/checkout@v3
-              # checkout the code from the repository
 
-            # and login to docker hub
+            # Log in to Docker Hub
             - name: Log into Docker Hub
               uses: docker/login-action@v1
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-            # Here we are building the docker image
+            # Build the Docker image
             - name: Build Docker Image
               run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
 
-            # Here we are pushing the docker image to docker hub
+            # Push the Docker image to Docker Hub
             - name: Push Docker Image to Docker Hub
               run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
