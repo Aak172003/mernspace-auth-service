@@ -120,7 +120,7 @@ describe("POST /users", () => {
             expect(users).toHaveLength(1);
             expect(users[0].role).toBe(Roles.MANAGER);
         });
-        it("should return 403 if non admin tries to create a user", async () => {});
+        it.todo("should return 403 if non admin tries to create a user");
     });
 
     // Sad Path -> Basically means (Fields are missing)
