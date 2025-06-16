@@ -23,6 +23,8 @@ describe("POST /users", () => {
     beforeEach(async () => {
         jwks.start();
 
+        console.log("connection ::::::::::::: ", connection);
+
         // here we drop the database and synchronize the database manually
         await connection.dropDatabase();
         await connection.synchronize();
@@ -44,6 +46,7 @@ describe("POST /users", () => {
             console.error("Connection is undefined during afterAll");
         }
     });
+
     // Happy Path -> Basically means (Given all fields)
     describe("Given all fields", () => {
         it("should persist the user in the database", async () => {
