@@ -8,6 +8,10 @@ console.log("DB_HOST :::::::::: ", DB_HOST);
 console.log("DB_USERNAME :::::::::: ", DB_USERNAME);
 console.log("DB_PASSWORD :::::::::: ", DB_PASSWORD);
 
+console.log(
+    "DB_HOST from process.env --------1111111111111111111111111111111",
+    process.env.DB_HOST,
+);
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: DB_HOST,
