@@ -1,4 +1,9 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, {
+    Request,
+    Response,
+    NextFunction,
+    RequestHandler,
+} from "express";
 import { AuthController } from "../controllers/AuthController";
 import { UserService } from "../services/UserService";
 import { AppDataSource } from "../config/data-source";
@@ -44,9 +49,9 @@ router.post(
 
     // After refactoring moved all parameter validators inside seperate file
     registerValidator,
-    async (req: Request, res: Response, next: NextFunction) => {
+    (async (req: Request, res: Response, next: NextFunction) => {
         await authController.register(req, res, next);
-    },
+    }) as RequestHandler,
 );
 
 router.post(
@@ -57,32 +62,34 @@ router.post(
 
     // After refactoring moved all parameter validators inside seperate file
     loginValidator,
-    async (req: Request, res: Response, next: NextFunction) => {
+    (async (req: Request, res: Response, next: NextFunction) => {
         await authController.login(req, res, next);
-    },
+    }) as RequestHandler,
 );
 
 // This is protected route , so we need to authenticate the user before accessing this route
 router.get(
     "/self",
-    authenticate,
-    async (req: Request, res: Response) =>
-        await authController.self(req as AuthRequest, res),
+    authenticate as RequestHandler,
+    (async (req: Request, res: Response) => {
+        await authController.self(req as AuthRequest, res);
+    }) as RequestHandler,
 );
 
-router.post(
-    "/refresh",
-    validateRefreshToken,
-    async (req: Request, res: Response, next: NextFunction) =>
-        await authController.refreshToken(req as AuthRequest, res, next),
-);
+router.post("/refresh", validateRefreshToken, (async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    await authController.refreshToken(req as AuthRequest, res, next);
+}) as RequestHandler);
 
-router.post(
-    "/logout",
-    authenticate,
-    parseRefreshToken,
-    async (req: Request, res: Response, next: NextFunction) =>
-        await authController.logout(req as AuthRequest, res, next),
-);
+router.post("/logout", authenticate, parseRefreshToken, (async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    await authController.logout(req as AuthRequest, res, next);
+}) as RequestHandler);
 
 export default router;
