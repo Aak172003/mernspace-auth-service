@@ -15,8 +15,16 @@ describe("POST /users", () => {
     // This will execute before all test case execution
     beforeAll(async () => {
         jwks = createJWKSMock("http://localhost:5501");
-
-        connection = await AppDataSource.initialize();
+        try {
+            connection = await AppDataSource.initialize();
+            console.log(
+                "connection ::::::::::::: 1111111111111111111111111111111111111111111111 ",
+                connection,
+            );
+        } catch (err) {
+            console.error("Failed to initialize database connection", err);
+            throw err; // Fail the test immediately
+        }
     });
 
     // This execute before each test case run
@@ -39,11 +47,8 @@ describe("POST /users", () => {
 
     // This will execute after all test cases run
     afterAll(async () => {
-        // await connection.destroy();
         if (connection) {
             await connection.destroy();
-        } else {
-            console.error("Connection is undefined during afterAll");
         }
     });
 
