@@ -57,8 +57,8 @@ jobs:
                   fi
 
             # Run tests
-            # - name: Test and Coverage
-            #   run: npm run test
+            - name: Test and Coverage
+              run: npm run test
 
             # Build TypeScript
             - name: Build TypeScript
