@@ -22,12 +22,15 @@ jobs:
         steps:
             # Checkout the code from the repository , and download our code to run
             - uses: actions/checkout@v3
+
             # Install dependencies
             - name: Install Dependencies
               run: npm ci
+
             # Run esLint
             - name: Run EsLint
               run: npm run lint:check
+
             # Run tests
             - name: Test and Coverage
               run: npm run test
@@ -40,8 +43,10 @@ jobs:
                   REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
                   JWKS_URI: ${{ secrets.JWKS_URI }}
                   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+
             - name: Build TypeScript
               run: npm run build
+
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:
@@ -58,21 +63,26 @@ jobs:
             # Build number is a unique number for each build , which is used to tag the image
             # aakash1707/mernspace-auth-service:build-${build_number} , this build number is provided by github
             IMAGE_TAG: build-${{ github.run_number }}
+
         # Only run this job if the push is to the main branch , we are only considering the main branch for deployment
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3
               # checkout the code from the repository
-              # and login to docker hub
+
+            # and login to docker hub
             - name: Log into Docker Hub
               uses: docker/login-action@v1
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
             # Here we are building the docker image
             - name: Build Docker Image
               run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
+
             # Here we are pushing the docker image to docker hub
             - name: Push Docker Image to Docker Hub
               run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
