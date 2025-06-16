@@ -140,11 +140,11 @@ jobs:
 
             - name: Verify Supabase DB Connection
               env:
-                  PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+                PGPASSWORD: ${{ secrets.DB_PASSWORD }}
               run: |
-                  echo "⏳ Checking DB connection..."
-                  psql -h $DB_HOST -U $DB_USERNAME -d $DB_NAME -p $DB_PORT -c 'SELECT version();'
-
+                echo "⏳ Checking DB connection..."
+                psql -4 -h $DB_HOST -U $DB_USERNAME -d $DB_NAME -p $DB_PORT -c 'SELECT version();'
+            
             # Optional: run init SQL or migration
             # - name: Run DB Init SQL
             #   env:
