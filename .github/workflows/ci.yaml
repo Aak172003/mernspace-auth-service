@@ -30,7 +30,6 @@ jobs:
             # Run esLint
             - name: Run EsLint
               run: npm run lint:check
-
               env:
                   DB_HOST: ${{ secrets.DB_HOST }}
                   DB_PORT: ${{ secrets.DB_PORT }}
@@ -44,11 +43,12 @@ jobs:
             - name: Read Secrets Keys
               run: |
                   if [ "$DB_NAME" == "postgres" ]; then
-                      echo "Got the secret token"
+                    echo "Got the secret token"
                   fi
                   if [ "$DB_PASSWORD" == "5H4Co2aFmRKy6dKv" ]; then
-                      echo "Got the secret password"
+                    echo "Got the secret password"
                   fi
+
             # Run tests
             - name: Test and Coverage
               run: npm run test
