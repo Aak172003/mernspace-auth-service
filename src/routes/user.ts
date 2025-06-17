@@ -1,4 +1,9 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, {
+    Request,
+    Response,
+    NextFunction,
+    RequestHandler,
+} from "express";
 import authenticate from "../middlewares/authenticate";
 import { canAccess } from "../middlewares/canAccess";
 import { Roles } from "../constants";
@@ -24,40 +29,44 @@ const userController = new UserController(userService, logger);
 
 router.post(
     "/",
-    authenticate,
+    authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
     createUserValidator,
-    async (req: Request, res: Response, next: NextFunction) => {
+    (async (req: Request, res: Response, next: NextFunction) => {
         await userController.create(req, res, next);
-    },
+    }) as RequestHandler,
 );
 
 router.patch(
     "/:userId",
-    authenticate,
+    authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
     updateUserValidator,
-    async (req: UpdateUserRequest, res: Response, next: NextFunction) => {
+    (async (req: UpdateUserRequest, res: Response, next: NextFunction) => {
         await userController.update(req, res, next);
-    },
+    }) as RequestHandler,
 );
 
-router.get("/", (req: Request, res: Response, next: NextFunction) =>
-    userController.getAll(req, res, next),
-);
+router.get("/", (async (req: Request, res: Response, next: NextFunction) => {
+    await userController.getAll(req, res, next);
+}) as RequestHandler);
 
 router.get(
     "/:userId",
-    authenticate,
+    authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
-    (req, res, next) => userController.getOne(req, res, next),
+    (async (req: Request, res: Response, next: NextFunction) => {
+        await userController.getOne(req, res, next);
+    }) as RequestHandler,
 );
 
 router.delete(
     "/:userId",
-    authenticate,
+    authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
-    (req, res, next) => userController.destroy(req, res, next),
+    (async (req: Request, res: Response, next: NextFunction) => {
+        await userController.destroy(req, res, next);
+    }) as RequestHandler,
 );
 
 export default router;

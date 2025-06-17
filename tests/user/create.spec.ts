@@ -15,13 +15,23 @@ describe("POST /users", () => {
     // This will execute before all test case execution
     beforeAll(async () => {
         jwks = createJWKSMock("http://localhost:5501");
-
-        connection = await AppDataSource.initialize();
+        try {
+            connection = await AppDataSource.initialize();
+            console.log(
+                "connection ::::::::::::: 1111111111111111111111111111111111111111111111 ",
+                connection,
+            );
+        } catch (err) {
+            console.error("Failed to initialize database connection", err);
+            throw err; // Fail the test immediately
+        }
     });
 
     // This execute before each test case run
     beforeEach(async () => {
         jwks.start();
+
+        console.log("connection ::::::::::::: ", connection);
 
         // here we drop the database and synchronize the database manually
         await connection.dropDatabase();
@@ -37,13 +47,11 @@ describe("POST /users", () => {
 
     // This will execute after all test cases run
     afterAll(async () => {
-        // await connection.destroy();
         if (connection) {
             await connection.destroy();
-        } else {
-            console.error("Connection is undefined during afterAll");
         }
     });
+
     // Happy Path -> Basically means (Given all fields)
     describe("Given all fields", () => {
         it("should persist the user in the database", async () => {
@@ -112,7 +120,7 @@ describe("POST /users", () => {
             expect(users).toHaveLength(1);
             expect(users[0].role).toBe(Roles.MANAGER);
         });
-        it("should return 403 if non admin tries to create a user", async () => {});
+        it.todo("should return 403 if non admin tries to create a user");
     });
 
     // Sad Path -> Basically means (Fields are missing)

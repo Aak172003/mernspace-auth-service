@@ -35,7 +35,7 @@ export default tseslint.config(
             "no-console": "off",
             // dot-notation is used to check if the property is accessed using dot notation
             "dot-notation": "error",
-            "@typescript-eslint/no-misused-promises": "off",
+            // "@typescript-eslint/no-misused-promises": "off",
         },
     },
 );

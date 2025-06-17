@@ -27,7 +27,7 @@ app.use(cookieParser());
 // so to resolve this issue we use next(err)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.get("/", (req, res, next) => {
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
     // const err = createHttpError(401, "You can't access this route");
     // next(err);
     res.send("Welcome to Auth Service");
