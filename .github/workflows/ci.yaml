@@ -168,7 +168,7 @@ jobs:
 
             # Run tests with Supabase database
             - name: Test and Coverage
-              run: npm run test
+              run: npm run test -- --runInBand
               env:
                   # Ensure Supabase default credentials are used
                   DB_HOST: ${{ secrets.DB_HOST }}
