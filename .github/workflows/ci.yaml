@@ -36,7 +36,7 @@ jobs:
                   version: latest
 
             - name: Link Supabase project
-              run: supabase link --project-ref ${{ env.PROJECT_ID }}
+              run: supabase link --project-ref $PROJECT_ID --password $DB_PASSWORD
 
             - name: Push database schema
               run: supabase db push
