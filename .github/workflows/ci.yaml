@@ -1,115 +1,19 @@
-# # Every job executes in a separate context
-
-# name: CI
-
-# # This is the triggers block.
-# # It is used to trigger the workflow when a pull request or push is made to the main branch.
-# on:
-#     pull_request:
-#         branches:
-#             - main
-#             - setup-github-actions-ciyaml-file
-#     push:
-#         branches:
-#             - main
-
-# # Group multiple jobs in a jobs group.
-# jobs:
-#     build-and-test:
-#         name: Build the project
-#         runs-on: ubuntu-latest
-#         env:
-#             DB_HOST: ${{ secrets.DB_HOST }}
-#             DB_PORT: ${{ secrets.DB_PORT }}
-#             DB_USERNAME: ${{ secrets.DB_USERNAME }}
-#             DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-#             DB_NAME: ${{ secrets.DB_NAME }}
-#             REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
-#             JWKS_URI: ${{ secrets.JWKS_URI }}
-#             PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-
-#         steps:
-#             # Checkout the code from the repository
-#             - name: Checkout Code
-#               uses: actions/checkout@v3
-
-#             # Install dependencies
-#             - name: Install Dependencies
-#               run: npm ci
-
-#             # Run ESLint
-#             - name: Run ESLint
-#               run: npm run lint:check
-
-#             # Read Secrets Keys
-#             - name: Read Secret Keys
-#               run: |
-#                   if [ "$DB_NAME" == "postgres" ]; then
-#                     echo "✅ DB_NAME matches postgres"
-#                   else
-#                     echo "❌ DB_NAME does not match postgres"
-#                   fi
-
-#                   if [ "$DB_PASSWORD" == "5H4Co2aFmRKy6dKv" ]; then
-#                     echo "✅ DB_PASSWORD matches expected secret"
-#                   else
-#                     echo "❌ DB_PASSWORD does not match expected secret"
-#                   fi
-
-#             # Run tests
-#             # - name: Test and Coverage
-#             #   run: npm run test
-
-#             # Build TypeScript
-#             - name: Build TypeScript
-#               run: npm run build
-
-#             # SonarCloud Scan
-#             - name: SonarCloud Scan
-#               uses: SonarSource/sonarcloud-github-action@master
-#               env:
-#                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-#     build-and-push-docker:
-#         name: Build and Push Docker Image
-#         needs: build-and-test
-#         runs-on: ubuntu-latest
-#         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-#         env:
-#             IMAGE_NAME: aakash1707/mernspace-auth-service
-#             IMAGE_TAG: build-${{ github.run_number }}
-
-#         steps:
-#             # Checkout the code from the repository
-#             - name: Checkout Repository
-#               uses: actions/checkout@v3
-
-#             # Log in to Docker Hub
-#             - name: Log into Docker Hub
-#               uses: docker/login-action@v1
-#               with:
-#                   username: ${{ secrets.DOCKERHUB_USERNAME }}
-#                   password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-#             # Build the Docker image
-#             - name: Build Docker Image
-#               run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} -f docker/prod/Dockerfile .
-
-#             # Push the Docker image to Docker Hub
-#             - name: Push Docker Image to Docker Hub
-#               run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+# Every job executes in a separate context
 
 name: CI
 
+# This is the triggers block.
+# It is used to trigger the workflow when a pull request or push is made to the main branch.
 on:
     pull_request:
         branches:
             - main
+            - setup-github-actions-ciyaml-file
     push:
         branches:
             - main
 
+# Group multiple jobs in a jobs group.
 jobs:
     build-and-test:
         name: Build the project
@@ -128,34 +32,6 @@ jobs:
             # Checkout the code from the repository
             - name: Checkout Code
               uses: actions/checkout@v3
-
-            # Install Supabase CLI
-            - name: Setup Supabase CLI
-              uses: supabase/setup-cli@v1
-              with:
-                  version: latest
-
-            # Initialize Supabase
-            - name: Initialize Supabase
-              run: supabase init
-
-            # Start Supabase PostgreSQL database and log if it started successfully
-            - name: Start Supabase Database
-              run: |
-                  set -e
-                  echo "Starting Supabase database..."
-                  if supabase db start; then
-                    echo "✅ Supabase database server started successfully."
-                  else
-                    echo "❌ Failed to start Supabase database server."
-                    exit 1
-                  fi
-
-            # Log Supabase database connection details for debugging
-            - name: Log Supabase Database Details
-              run: |
-                  echo "Supabase database connection details:"
-                  supabase status
 
             # Install dependencies
             - name: Install Dependencies
@@ -180,33 +56,9 @@ jobs:
                     echo "❌ DB_PASSWORD does not match expected secret"
                   fi
 
-            # Check PostgreSQL connection to local Supabase database
-            - name: Check PostgreSQL Connection
-              run: |
-                  echo "Checking PostgreSQL connection..."
-                  export PGPASSWORD="$DB_PASSWORD"
-                  if psql -h localhost -U postgres -d "$DB_NAME" -p 5432 -c '\q'; then
-                    echo "✅ Successfully connected to PostgreSQL database $DB_NAME at localhost."
-                  else
-                    echo "❌ Failed to connect to PostgreSQL database $DB_NAME at localhost."
-                    exit 1
-                  fi
-              env:
-                  DB_HOST: localhost
-                  DB_PORT: 5432
-                  DB_USERNAME: postgres
-                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                  DB_NAME: ${{ secrets.DB_NAME }}
-
-            # Run tests with Supabase database
-            - name: Test and Coverage
-              run: npm run test
-              env:
-                  DB_HOST: localhost
-                  DB_PORT: 5432
-                  DB_USERNAME: postgres
-                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                  DB_NAME: ${{ secrets.DB_NAME }}
+            # Run tests
+            # - name: Test and Coverage
+            #   run: npm run test
 
             # Build TypeScript
             - name: Build TypeScript
