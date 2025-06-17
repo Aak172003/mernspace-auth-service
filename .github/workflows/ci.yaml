@@ -139,9 +139,17 @@ jobs:
             - name: Initialize Supabase
               run: supabase init
 
-            # Start Supabase PostgreSQL database
+            # Start Supabase PostgreSQL database and log if it started successfully
             - name: Start Supabase Database
-              run: supabase db start
+              run: |
+                  set -e
+                  echo "Starting Supabase database..."
+                  if supabase db start; then
+                    echo "✅ Supabase database server started successfully."
+                  else
+                    echo "❌ Failed to start Supabase database server."
+                    exit 1
+                  fi
 
             # Install dependencies
             - name: Install Dependencies
@@ -167,10 +175,26 @@ jobs:
                   fi
 
             # Run tests with Supabase database
-            - name: Test and Coverage
-              run: npm run test 
+            - name: Check PostgreSQL Connection
+              run: |
+                  echo "Checking PostgreSQL connection..."
+                  export PGPASSWORD="$DB_PASSWORD"
+                  if psql -h "$DB_HOST" -U "$DB_USERNAME" -d "$DB_NAME" -c '\q'; then
+                    echo "✅ Successfully connected to PostgreSQL database $DB_NAME at $DB_HOST."
+                  else
+                    echo "❌ Failed to connect to PostgreSQL database $DB_NAME at $DB_HOST."
+                    exit 1
+                  fi
               env:
-                  # Ensure Supabase default credentials are used
+                  DB_HOST: ${{ secrets.DB_HOST }}
+                  DB_PORT: ${{ secrets.DB_PORT }}
+                  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+                  DB_NAME: ${{ secrets.DB_NAME }}
+
+            - name: Test and Coverage
+              run: npm run test
+              env:
                   DB_HOST: ${{ secrets.DB_HOST }}
                   DB_PORT: ${{ secrets.DB_PORT }}
                   DB_USERNAME: ${{ secrets.DB_USERNAME }}
