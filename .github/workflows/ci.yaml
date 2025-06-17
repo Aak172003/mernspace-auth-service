@@ -57,11 +57,14 @@ jobs:
               run: |
                   supabase init
                   supabase db start
-                  if supabase db status | grep -q "is running"; then
-                    echo "✅ Supabase/PostgreSQL database setup successfully"
-                  else
-                    echo "❌ Supabase/PostgreSQL database setup failed"
-                    exit 1
+
+            - name: Verify generated types match Postgres schema
+              run: |
+                  supabase gen types typescript --local > schema.gen.ts
+                  if ! git diff --ignore-space-at-eol --exit-code --quiet schema.gen.ts; then
+                  echo "Detected uncommitted changes after build. See status below:"
+                  git diff
+                  exit 1
                   fi
 
             - name: Test and Coverage
