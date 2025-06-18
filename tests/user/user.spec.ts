@@ -1,7 +1,7 @@
 import createJWKSMock from "mock-jwks";
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import request from "supertest";
 import app from "../../src/app";
 import { Roles } from "../../src/constants";
