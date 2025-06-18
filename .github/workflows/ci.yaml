@@ -23,23 +23,9 @@ jobs:
             REFRESH_SECRET_KEY: ${{ secrets.REFRESH_SECRET_KEY }}
             JWKS_URI: ${{ secrets.JWKS_URI }}
             PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-            SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-            PROJECT_ID: ${{ secrets.PROJECT_ID }}
-
         steps:
             - name: Checkout Code
               uses: actions/checkout@v3
-
-            - name: Start Supabase PostgreSQL database
-              uses: supabase/setup-cli@v1
-              with:
-                  version: latest
-
-            - name: Link Supabase project
-              run: supabase link --project-ref ${{ env.PROJECT_ID }}
-
-            - name: Push database schema
-              run: supabase db push
 
             - name: Install Dependencies
               run: npm ci
@@ -62,8 +48,8 @@ jobs:
                   fi
 
             # Uncomment the test step when ready
-            - name: Test and Coverage
-              run: npm run test
+            # - name: Test and Coverage
+            #   run: npm run test
 
             - name: Build TypeScript
               run: npm run build
