@@ -9,9 +9,18 @@ import authRouter from "./routes/auth";
 import tenantRouter from "./routes/tenant";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user";
+import cors from "cors";
 
 const app = express();
 
+app.use(
+    cors({
+        // Here we basciaclly defines which domains can access my app server
+        origin: ["http://localhost:5173"],
+
+        credentials: true,
+    }),
+);
 // Host our static files from public directory,
 // here we tell the path where our static files are located
 app.use(
