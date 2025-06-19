@@ -3,8 +3,6 @@ import app from "./app";
 import logger from "./config/logger";
 import { AppDataSource } from "./config/data-source";
 
-console.log("Running on Port ------>>>>>> ", ConfigVariables.PORT);
-
 const startServer = async () => {
     const PORT = ConfigVariables.PORT;
     try {
@@ -15,7 +13,6 @@ const startServer = async () => {
 
         app.listen(PORT, () => {
             logger.info("Server Listening on port", { port: PORT });
-            // logger.error("We found error ");
 
             // This logger will not see because i choose info for console transport
             logger.silly("Hi silly logger");
