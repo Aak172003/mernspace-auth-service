@@ -31,7 +31,6 @@ export default expressjwt({
         // 2nd way to get token form cookie , in our case we are sending accesstoken and refreshtoken in cookies
         const { accessToken } = req.cookies as AuthCookie;
 
-        console.log("accessToken :::::::::: ", accessToken);
         return accessToken;
     },
 });
