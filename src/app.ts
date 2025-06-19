@@ -17,7 +17,6 @@ app.use(
     cors({
         // Here we basciaclly defines which domains can access my app server
         origin: ["http://localhost:5173"],
-
         credentials: true,
     }),
 );
