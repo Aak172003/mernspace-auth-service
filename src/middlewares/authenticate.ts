@@ -23,7 +23,6 @@ export default expressjwt({
         // If not undefined which means we have token in header then return the token
         if (authHeader && authHeader.split(" ")[1] !== "undefined") {
             const token = authHeader.split(" ")[1];
-            console.log("token 1111111111111111111111111111 ", token);
             if (token) {
                 return token;
             }

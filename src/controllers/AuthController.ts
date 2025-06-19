@@ -197,7 +197,6 @@ export class AuthController {
     }
 
     async self(req: AuthRequest, res: Response) {
-        console.log("req.auth.sub :::::::::: ", req.auth.sub);
         const user = await this.userService.findById(Number(req.auth.sub));
         res.json({ ...user, password: undefined });
     }
@@ -214,7 +213,6 @@ export class AuthController {
         // find user , because there is relation between refreshToken and user table
         const user = await this.userService.findById(Number(req.auth.sub));
 
-        console.log("user 555555555555555555555555555 ", user);
         // Find user to delete the refreshToken corresponding to it in database
         if (!user) {
             const error = createHttpError(
