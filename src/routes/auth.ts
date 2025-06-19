@@ -76,20 +76,21 @@ router.get(
     }) as RequestHandler,
 );
 
-router.post("/refresh", validateRefreshToken, (async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => {
-    await authController.refreshToken(req as AuthRequest, res, next);
-}) as RequestHandler);
+router.post(
+    "/refresh",
+    validateRefreshToken as RequestHandler,
+    (async (req: Request, res: Response, next: NextFunction) => {
+        await authController.refreshToken(req as AuthRequest, res, next);
+    }) as RequestHandler,
+);
 
-router.post("/logout", authenticate, parseRefreshToken, (async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => {
-    await authController.logout(req as AuthRequest, res, next);
-}) as RequestHandler);
+router.post(
+    "/logout",
+    authenticate as RequestHandler,
+    parseRefreshToken,
+    (async (req: Request, res: Response, next: NextFunction) => {
+        await authController.logout(req as AuthRequest, res, next);
+    }) as RequestHandler,
+);
 
 export default router;

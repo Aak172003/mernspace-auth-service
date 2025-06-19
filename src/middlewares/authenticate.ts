@@ -23,6 +23,7 @@ export default expressjwt({
         // If not undefined which means we have token in header then return the token
         if (authHeader && authHeader.split(" ")[1] !== "undefined") {
             const token = authHeader.split(" ")[1];
+            console.log("token 1111111111111111111111111111 ", token);
             if (token) {
                 return token;
             }
@@ -30,6 +31,8 @@ export default expressjwt({
 
         // 2nd way to get token form cookie , in our case we are sending accesstoken and refreshtoken in cookies
         const { accessToken } = req.cookies as AuthCookie;
+
+        console.log("accessToken :::::::::: ", accessToken);
         return accessToken;
     },
 });
