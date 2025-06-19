@@ -212,6 +212,7 @@ export class AuthController {
         const accessToken = this.tokenService.generateAccessToken(payload);
         // find user , because there is relation between refreshToken and user table
         const user = await this.userService.findById(Number(req.auth.sub));
+
         // Find user to delete the refreshToken corresponding to it in database
         if (!user) {
             const error = createHttpError(
