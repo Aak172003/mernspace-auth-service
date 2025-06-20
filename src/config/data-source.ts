@@ -39,7 +39,7 @@ export const AppDataSource = new DataSource({
     // synchronize: true,
     // because manually in all test cases we already syncing with our database ,
     // That's why we make false her
-    synchronize: false,
+    synchronize: true,
     logging: false,
 
     // this is wild card pattern . here src/entity/*.ts -> * means any filename with .ts extension from src/entity directory
