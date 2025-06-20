@@ -1,0 +1,4 @@
+if our npm version is greater than 5 then we can use npx
+ 
+and npx use when we directly run any command in termainal , 
+But if we execute the same command from script , so always use npm run

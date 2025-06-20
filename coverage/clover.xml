@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750441513806" clover="3.2.0">
-  <project timestamp="1750441513806" name="All files">
-    <metrics statements="1949" coveredstatements="1302" conditionals="69" coveredconditionals="51" methods="63" coveredmethods="26" elements="2081" coveredelements="1379" complexity="0" loc="1949" ncloc="1949" packages="11" files="36" classes="36"/>
+<coverage generated="1750443441325" clover="3.2.0">
+  <project timestamp="1750443441326" name="All files">
+    <metrics statements="1949" coveredstatements="1294" conditionals="68" coveredconditionals="49" methods="63" coveredmethods="26" elements="2080" coveredelements="1369" complexity="0" loc="1949" ncloc="1949" packages="11" files="36" classes="36"/>
     <package name="src">
       <metrics statements="161" coveredstatements="114" conditionals="13" coveredconditionals="7" methods="5" coveredmethods="3"/>
       <file name="app.ts" path="C:\Users\Aakash Prajapati\OneDrive\Desktop\Multi_Tenant_Application\mernspace-auth-service\src\app.ts">
@@ -1070,7 +1070,7 @@
       </file>
     </package>
     <package name="src.middlewares">
-      <metrics statements="124" coveredstatements="93" conditionals="7" coveredconditionals="5" methods="5" coveredmethods="2"/>
+      <metrics statements="124" coveredstatements="85" conditionals="6" coveredconditionals="3" methods="5" coveredmethods="2"/>
       <file name="authenticate.ts" path="C:\Users\Aakash Prajapati\OneDrive\Desktop\Multi_Tenant_Application\mernspace-auth-service\src\middlewares\authenticate.ts">
         <metrics statements="36" coveredstatements="31" conditionals="3" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -1111,27 +1111,27 @@
         <line num="36" count="1" type="stmt"/>
       </file>
       <file name="canAccess.ts" path="C:\Users\Aakash Prajapati\OneDrive\Desktop\Multi_Tenant_Application\mernspace-auth-service\src\middlewares\canAccess.ts">
-        <metrics statements="24" coveredstatements="24" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <metrics statements="24" coveredstatements="16" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="6" count="8" type="cond" truecount="1" falsecount="0"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
-        <line num="9" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
         <line num="21" count="2" type="stmt"/>
         <line num="22" count="2" type="stmt"/>
         <line num="23" count="8" type="stmt"/>
