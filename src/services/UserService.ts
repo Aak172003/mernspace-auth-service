@@ -97,6 +97,9 @@ export class UserService {
     async findById(user_id: number) {
         const user = await this.userRepository.findOne({
             where: { id: user_id },
+            relations: {
+                tenant: true,
+            },
         });
         return user;
     }

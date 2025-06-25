@@ -25,6 +25,8 @@ export class UserController {
 
         const { firstName, lastName, email, password, tenantId, role } =
             req.body;
+
+        console.log("req.body :::::::::::::: ", req.body);
         this.logger.debug("New request to create a user ", {
             firstName,
             lastName,
