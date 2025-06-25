@@ -48,6 +48,7 @@ export class UserService {
         const hashedPassword =
             await this.credentialService.giveHashedPassword(password);
         try {
+            console.log("tenantId ::::::::::: ", tenantId);
             return await this.userRepository.save({
                 firstName,
                 lastName,
@@ -97,6 +98,9 @@ export class UserService {
     async findById(user_id: number) {
         const user = await this.userRepository.findOne({
             where: { id: user_id },
+            relations: {
+                tenant: true,
+            },
         });
         return user;
     }
