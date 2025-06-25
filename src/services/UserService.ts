@@ -48,7 +48,6 @@ export class UserService {
         const hashedPassword =
             await this.credentialService.giveHashedPassword(password);
         try {
-            console.log("tenantId ::::::::::: ", tenantId);
             return await this.userRepository.save({
                 firstName,
                 lastName,
