@@ -110,14 +110,10 @@ export class UserController {
             onlyValidData: true,
         });
 
-        console.log("validateQuery :::::::::::::: ", validateQuery);
-
         try {
             const [users, count] = await this.userService.getAll(
                 validateQuery as userQueryParams,
             );
-
-            console.log("users from user controller --------------- ", users);
             this.logger.info("All tenant have been fetched");
             res.json({
                 currentPage: validateQuery.currentPage as number,

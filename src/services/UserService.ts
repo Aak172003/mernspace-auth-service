@@ -133,7 +133,6 @@ export class UserService {
         // For skip -> (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
         // For take -> 4 ( which means it get 4 users from the database )
 
-        // ------------------------------------------------------------------------------------------------
         // For skip -> (2 -1 )*  4  = 4 ( which means skip 4 users because we send first four users for current page 1)
         // For take -> 4 ( which means it get 4 users from the database )
 
@@ -142,7 +141,6 @@ export class UserService {
             .take(validateQuery.perPage)
             .getManyAndCount();
 
-        console.log("result :::::::::::::: ", result);
         return result;
     }
 

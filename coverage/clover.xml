@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751049919478" clover="3.2.0">
-  <project timestamp="1751049919479" name="All files">
-    <metrics statements="2033" coveredstatements="1346" conditionals="69" coveredconditionals="51" methods="65" coveredmethods="26" elements="2167" coveredelements="1423" complexity="0" loc="2033" ncloc="2033" packages="11" files="37" classes="37"/>
+<coverage generated="1751050246980" clover="3.2.0">
+  <project timestamp="1751050246980" name="All files">
+    <metrics statements="2027" coveredstatements="1346" conditionals="69" coveredconditionals="51" methods="65" coveredmethods="26" elements="2161" coveredelements="1423" complexity="0" loc="2027" ncloc="2027" packages="11" files="37" classes="37"/>
     <package name="src">
       <metrics statements="161" coveredstatements="114" conditionals="13" coveredconditionals="7" methods="5" coveredmethods="3"/>
       <file name="app.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\app.ts">
@@ -360,7 +360,7 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="591" coveredstatements="225" conditionals="15" coveredconditionals="11" methods="18" coveredmethods="7"/>
+      <metrics statements="587" coveredstatements="225" conditionals="15" coveredconditionals="11" methods="18" coveredmethods="7"/>
       <file name="AuthController.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\controllers\AuthController.ts">
         <metrics statements="277" coveredstatements="124" conditionals="7" coveredconditionals="7" methods="6" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
@@ -777,7 +777,7 @@
         <line num="132" count="1" type="stmt"/>
       </file>
       <file name="UserController.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\controllers\UserController.ts">
-        <metrics statements="182" coveredstatements="62" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="2"/>
+        <metrics statements="178" coveredstatements="62" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -905,12 +905,12 @@
         <line num="125" count="0" type="stmt"/>
         <line num="126" count="0" type="stmt"/>
         <line num="127" count="0" type="stmt"/>
-        <line num="128" count="0" type="stmt"/>
-        <line num="129" count="0" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="129" count="1" type="stmt"/>
         <line num="130" count="0" type="stmt"/>
         <line num="131" count="0" type="stmt"/>
-        <line num="132" count="1" type="stmt"/>
-        <line num="133" count="1" type="stmt"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
         <line num="134" count="0" type="stmt"/>
         <line num="135" count="0" type="stmt"/>
         <line num="136" count="0" type="stmt"/>
@@ -930,12 +930,12 @@
         <line num="150" count="0" type="stmt"/>
         <line num="151" count="0" type="stmt"/>
         <line num="152" count="0" type="stmt"/>
-        <line num="153" count="0" type="stmt"/>
-        <line num="154" count="0" type="stmt"/>
+        <line num="153" count="1" type="stmt"/>
+        <line num="154" count="1" type="stmt"/>
         <line num="155" count="0" type="stmt"/>
         <line num="156" count="0" type="stmt"/>
-        <line num="157" count="1" type="stmt"/>
-        <line num="158" count="1" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
         <line num="159" count="0" type="stmt"/>
         <line num="160" count="0" type="stmt"/>
         <line num="161" count="0" type="stmt"/>
@@ -955,11 +955,7 @@
         <line num="175" count="0" type="stmt"/>
         <line num="176" count="0" type="stmt"/>
         <line num="177" count="0" type="stmt"/>
-        <line num="178" count="0" type="stmt"/>
-        <line num="179" count="0" type="stmt"/>
-        <line num="180" count="0" type="stmt"/>
-        <line num="181" count="0" type="stmt"/>
-        <line num="182" count="1" type="stmt"/>
+        <line num="178" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.entity">
@@ -1616,7 +1612,7 @@
       </file>
     </package>
     <package name="src.services">
-      <metrics statements="302" coveredstatements="202" conditionals="18" coveredconditionals="14" methods="20" coveredmethods="10"/>
+      <metrics statements="300" coveredstatements="202" conditionals="18" coveredconditionals="14" methods="20" coveredmethods="10"/>
       <file name="CredentialService.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\services\CredentialService.ts">
         <metrics statements="19" coveredstatements="12" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -1777,7 +1773,7 @@
         <line num="105" count="1" type="stmt"/>
       </file>
       <file name="UserService.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\services\UserService.ts">
-        <metrics statements="152" coveredstatements="81" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="3"/>
+        <metrics statements="150" coveredstatements="81" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1923,13 +1919,11 @@
         <line num="143" count="0" type="stmt"/>
         <line num="144" count="0" type="stmt"/>
         <line num="145" count="0" type="stmt"/>
-        <line num="146" count="0" type="stmt"/>
-        <line num="147" count="0" type="stmt"/>
-        <line num="148" count="1" type="stmt"/>
-        <line num="149" count="1" type="stmt"/>
-        <line num="150" count="0" type="stmt"/>
-        <line num="151" count="0" type="stmt"/>
-        <line num="152" count="1" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="147" count="1" type="stmt"/>
+        <line num="148" count="0" type="stmt"/>
+        <line num="149" count="0" type="stmt"/>
+        <line num="150" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.types">
