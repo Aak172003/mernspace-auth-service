@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54% </span>
+                <span class="strong">64% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>81/150</span>
+                <span class='fraction'>96/150</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54% </span>
+                <span class="strong">64% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>81/150</span>
+                <span class='fraction'>96/150</span>
             </div>
         
             
@@ -343,21 +343,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -365,7 +365,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { LimitedUserData, UserData, userQueryParams } from "../types";
+import { LimitedUserData, UserData, UserQueryParams } from "../types";
 import createHttpError from "http-errors";
 import { CredentialService } from "./CredentialService";
 &nbsp;
@@ -492,22 +492,22 @@ export class UserService {
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     // Here implement pagination
-    async <span class="fstat-no" title="function not covered" >getAll(validateQuery: userQueryParams) {</span>
-<span class="cstat-no" title="statement not covered" >        const queryBuilder = this.userRepository.createQueryBuilder();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        // For skip -&gt; (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)</span>
-<span class="cstat-no" title="statement not covered" >        // For take -&gt; 4 ( which means it get 4 users from the database )</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        // For skip -&gt; (2 -1 )*  4  = 4 ( which means skip 4 users because we send first four users for current page 1)</span>
-<span class="cstat-no" title="statement not covered" >        // For take -&gt; 4 ( which means it get 4 users from the database )</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const result = await queryBuilder</span>
-<span class="cstat-no" title="statement not covered" >            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)</span>
-<span class="cstat-no" title="statement not covered" >            .take(validateQuery.perPage)</span>
-<span class="cstat-no" title="statement not covered" >            .getManyAndCount();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        return result;</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    async getAll(validateQuery: UserQueryParams) {
+        const queryBuilder = this.userRepository.createQueryBuilder();
+&nbsp;
+        // For skip -&gt; (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
+        // For take -&gt; 4 ( which means it get 4 users from the database )
+&nbsp;
+        // For skip -&gt; (2 -1 )*  4  = 4 ( which means skip 4 users because we send first four users for current page 1)
+        // For take -&gt; 4 ( which means it get 4 users from the database )
+&nbsp;
+        const result = await queryBuilder
+            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
+            .take(validateQuery.perPage)
+            .getManyAndCount();
+&nbsp;
+        return result;
+    }
 &nbsp;
     async <span class="fstat-no" title="function not covered" >deleteById(userId: number) {</span>
 <span class="cstat-no" title="statement not covered" >        return await this.userRepository.delete(userId);</span>
@@ -520,7 +520,7 @@ export class UserService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-27T18:50:46.786Z
+                at 2025-06-27T19:24:23.749Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
