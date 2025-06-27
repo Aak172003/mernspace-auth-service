@@ -1,8 +1,12 @@
 import { NextFunction, Response, Request } from "express";
 import { UserService } from "../services/UserService";
 import { Logger } from "winston";
-import { CreateUserRequest, UpdateUserRequest } from "../types";
-import { validationResult } from "express-validator";
+import {
+    CreateUserRequest,
+    UpdateUserRequest,
+    UserQueryParams,
+} from "../types";
+import { matchedData, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
 export class UserController {
@@ -14,11 +18,6 @@ export class UserController {
     async create(req: CreateUserRequest, res: Response, next: NextFunction) {
         const result = validationResult(req);
 
-        console.log(
-            "this is result from create user ============ ",
-            result.array(),
-        );
-
         if (!result.isEmpty()) {
             return res.status(400).json({ errors: result.array() });
         }
@@ -26,7 +25,6 @@ export class UserController {
         const { firstName, lastName, email, password, tenantId, role } =
             req.body;
 
-        console.log("req.body :::::::::::::: ", req.body);
         this.logger.debug("New request to create a user ", {
             firstName,
             lastName,
@@ -46,7 +44,7 @@ export class UserController {
                 tenantId,
             });
 
-            res.status(201).json({ id: user.id });
+            res.status(201).json({ id: user.id, user });
         } catch (error) {
             this.logger.error(error);
             next(error);
@@ -60,11 +58,6 @@ export class UserController {
 
         // Validation
         const result = validationResult(req);
-
-        console.log(
-            "this is result from create user ============ ",
-            result.array(),
-        );
 
         if (!result.isEmpty()) {
             return res.status(400).json({ errors: result.array() });
@@ -101,12 +94,22 @@ export class UserController {
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
-        try {
-            const users = await this.userService.getAll();
+        // This is how we get the query params , this matchedData is used to get the query params from the request which is provided by express-validator
+        const validateQuery = matchedData(req, {
+            onlyValidData: true,
+        });
 
-            console.log("users from user controller --------------- ", users);
+        try {
+            const [users, count] = await this.userService.getAll(
+                validateQuery as UserQueryParams,
+            );
             this.logger.info("All tenant have been fetched");
-            res.json(users);
+            res.json({
+                currentPage: validateQuery.currentPage as number,
+                perPage: validateQuery.perPage as number,
+                total: count,
+                data: users,
+            });
         } catch (err) {
             next(err);
         }

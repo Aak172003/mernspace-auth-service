@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.51% </span>
+                <span class="strong">64% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>79/135</span>
+                <span class='fraction'>96/150</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.51% </span>
+                <span class="strong">64% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>79/135</span>
+                <span class='fraction'>96/150</span>
             </div>
         
             
@@ -198,7 +198,22 @@
 <a name='L133'></a><a href='#L133'>133</a>
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -326,8 +341,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -335,7 +365,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { LimitedUserData, UserData } from "../types";
+import { LimitedUserData, UserData, UserQueryParams } from "../types";
 import createHttpError from "http-errors";
 import { CredentialService } from "./CredentialService";
 &nbsp;
@@ -460,9 +490,24 @@ export class UserService {
 <span class="cstat-no" title="statement not covered" >            throw error;</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-    async <span class="fstat-no" title="function not covered" >getAll() {</span>
-<span class="cstat-no" title="statement not covered" >        return await this.userRepository.find();</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+    // Here implement pagination
+    async getAll(validateQuery: UserQueryParams) {
+        const queryBuilder = this.userRepository.createQueryBuilder();
+&nbsp;
+        // For skip -&gt; (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
+        // For take -&gt; 4 ( which means it get 4 users from the database )
+&nbsp;
+        // For skip -&gt; (2 -1 )*  4  = 4 ( which means skip 4 users because we send first four users for current page 1)
+        // For take -&gt; 4 ( which means it get 4 users from the database )
+&nbsp;
+        const result = await queryBuilder
+            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
+            .take(validateQuery.perPage)
+            .getManyAndCount();
+&nbsp;
+        return result;
+    }
 &nbsp;
     async <span class="fstat-no" title="function not covered" >deleteById(userId: number) {</span>
 <span class="cstat-no" title="statement not covered" >        return await this.userRepository.delete(userId);</span>
@@ -475,7 +520,7 @@ export class UserService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-25T06:08:45.653Z
+                at 2025-06-27T19:24:23.749Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
