@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { LimitedUserData, UserData } from "../types";
+import { LimitedUserData, UserData, userQueryParams } from "../types";
 import createHttpError from "http-errors";
 import { CredentialService } from "./CredentialService";
 
@@ -125,8 +125,25 @@ export class UserService {
             throw error;
         }
     }
-    async getAll() {
-        return await this.userRepository.find();
+
+    // Here implement pagination
+    async getAll(validateQuery: userQueryParams) {
+        const queryBuilder = this.userRepository.createQueryBuilder();
+
+        // For skip -> (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
+        // For take -> 4 ( which means it get 4 users from the database )
+
+        // ------------------------------------------------------------------------------------------------
+        // For skip -> (2 -1 )*  4  = 4 ( which means skip 4 users because we send first four users for current page 1)
+        // For take -> 4 ( which means it get 4 users from the database )
+
+        const result = await queryBuilder
+            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
+            .take(validateQuery.perPage)
+            .getManyAndCount();
+
+        console.log("result :::::::::::::: ", result);
+        return result;
     }
 
     async deleteById(userId: number) {

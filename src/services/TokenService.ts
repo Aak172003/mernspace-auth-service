@@ -67,7 +67,7 @@ export class TokenService {
 
         const accessToken = sign(payload, privateKey, {
             algorithm: "RS256",
-            expiresIn: "1m",
+            expiresIn: "1h",
             issuer: "auth-service", // which service signs this token
         });
         return accessToken;
@@ -79,7 +79,7 @@ export class TokenService {
             ConfigVariables.REFRESH_SECRET_KEY!,
             {
                 algorithm: "HS256",
-                expiresIn: "1h",
+                expiresIn: "2h",
                 issuer: "auth-service",
                 jwtid: String(payload.id), // unique identifier for the refresh token
             },

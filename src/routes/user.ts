@@ -16,6 +16,7 @@ import logger from "../config/logger";
 import createUserValidator from "../validators/create-user-validator";
 import updateUserValidator from "../validators/update-user-validator";
 import { UpdateUserRequest } from "../types";
+import listUsersValidator from "../validators/list-users-validator";
 
 const router = express();
 
@@ -47,9 +48,15 @@ router.patch(
     }) as RequestHandler,
 );
 
-router.get("/", (async (req: Request, res: Response, next: NextFunction) => {
-    await userController.getAll(req, res, next);
-}) as RequestHandler);
+router.get(
+    "/",
+    authenticate as RequestHandler,
+    listUsersValidator,
+    canAccess([Roles.ADMIN]),
+    (async (req: Request, res: Response, next: NextFunction) => {
+        await userController.getAll(req, res, next);
+    }) as RequestHandler,
+);
 
 router.get(
     "/:userId",

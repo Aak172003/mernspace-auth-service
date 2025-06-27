@@ -1,8 +1,12 @@
 import { NextFunction, Response, Request } from "express";
 import { UserService } from "../services/UserService";
 import { Logger } from "winston";
-import { CreateUserRequest, UpdateUserRequest } from "../types";
-import { validationResult } from "express-validator";
+import {
+    CreateUserRequest,
+    UpdateUserRequest,
+    userQueryParams,
+} from "../types";
+import { matchedData, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
 export class UserController {
@@ -46,7 +50,7 @@ export class UserController {
                 tenantId,
             });
 
-            res.status(201).json({ id: user.id });
+            res.status(201).json({ id: user.id, user });
         } catch (error) {
             this.logger.error(error);
             next(error);
@@ -101,12 +105,26 @@ export class UserController {
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
+        // This is how we get the query params , this matchedData is used to get the query params from the request which is provided by express-validator
+        const validateQuery = matchedData(req, {
+            onlyValidData: true,
+        });
+
+        console.log("validateQuery :::::::::::::: ", validateQuery);
+
         try {
-            const users = await this.userService.getAll();
+            const [users, count] = await this.userService.getAll(
+                validateQuery as userQueryParams,
+            );
 
             console.log("users from user controller --------------- ", users);
             this.logger.info("All tenant have been fetched");
-            res.json(users);
+            res.json({
+                currentPage: validateQuery.currentPage as number,
+                perPage: validateQuery.perPage as number,
+                total: count,
+                data: users,
+            });
         } catch (err) {
             next(err);
         }
