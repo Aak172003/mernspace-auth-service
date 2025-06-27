@@ -4,7 +4,7 @@ import { Logger } from "winston";
 import {
     CreateUserRequest,
     UpdateUserRequest,
-    userQueryParams,
+    UserQueryParams,
 } from "../types";
 import { matchedData, validationResult } from "express-validator";
 import createHttpError from "http-errors";
@@ -18,11 +18,6 @@ export class UserController {
     async create(req: CreateUserRequest, res: Response, next: NextFunction) {
         const result = validationResult(req);
 
-        console.log(
-            "this is result from create user ============ ",
-            result.array(),
-        );
-
         if (!result.isEmpty()) {
             return res.status(400).json({ errors: result.array() });
         }
@@ -30,7 +25,6 @@ export class UserController {
         const { firstName, lastName, email, password, tenantId, role } =
             req.body;
 
-        console.log("req.body :::::::::::::: ", req.body);
         this.logger.debug("New request to create a user ", {
             firstName,
             lastName,
@@ -64,11 +58,6 @@ export class UserController {
 
         // Validation
         const result = validationResult(req);
-
-        console.log(
-            "this is result from create user ============ ",
-            result.array(),
-        );
 
         if (!result.isEmpty()) {
             return res.status(400).json({ errors: result.array() });
@@ -112,7 +101,7 @@ export class UserController {
 
         try {
             const [users, count] = await this.userService.getAll(
-                validateQuery as userQueryParams,
+                validateQuery as UserQueryParams,
             );
             this.logger.info("All tenant have been fetched");
             res.json({

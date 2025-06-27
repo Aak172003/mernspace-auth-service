@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { LimitedUserData, UserData, userQueryParams } from "../types";
+import { LimitedUserData, UserData, UserQueryParams } from "../types";
 import createHttpError from "http-errors";
 import { CredentialService } from "./CredentialService";
 
@@ -127,7 +127,7 @@ export class UserService {
     }
 
     // Here implement pagination
-    async getAll(validateQuery: userQueryParams) {
+    async getAll(validateQuery: UserQueryParams) {
         const queryBuilder = this.userRepository.createQueryBuilder();
 
         // For skip -> (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
