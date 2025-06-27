@@ -109,6 +109,21 @@ describe("POST /aut/self", () => {
             );
         });
 
+        it("Should return the user", async () => {
+            const adminToken = jwks.token({
+                sub: "1",
+                role: Roles.ADMIN,
+            });
+
+            const response = await request(app)
+                .get("/users")
+                .set("Cookie", [`accessToken=${adminToken};`]);
+
+            console.log("response from user -------------- ", response.body);
+
+            expect(response.statusCode).toBe(200);
+        });
+
         it("should not the return password", async () => {
             const userData = {
                 firstName: "Rakesh",
