@@ -130,11 +130,8 @@ export class UserService {
 
     // Here implement pagination
     async getAll(validateQuery: UserQueryParams) {
-        console.log("validateQuery for user :::::::::::::::: ", validateQuery);
-
         // user is alias name for user table
         const queryBuilder = this.userRepository.createQueryBuilder("user");
-
         if (validateQuery.q) {
             const searchTerm = `%${validateQuery.q}%`;
             // Like is case sensitive so we use ILIKE for case insensitive
@@ -199,8 +196,6 @@ export class UserService {
             .orderBy("user.id", "DESC")
             .getManyAndCount();
 
-        console.log("queryBuilder :::::::::::: ", queryBuilder.getSql());
-        console.log("result :::::::::::: ", result);
         return result;
     }
 

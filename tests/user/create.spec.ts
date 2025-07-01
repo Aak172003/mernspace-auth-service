@@ -17,10 +17,6 @@ describe("POST /users", () => {
         jwks = createJWKSMock("http://localhost:5501");
         try {
             connection = await AppDataSource.initialize();
-            console.log(
-                "connection ::::::::::::: 1111111111111111111111111111111111111111111111 ",
-                connection,
-            );
         } catch (err) {
             console.error("Failed to initialize database connection", err);
             throw err; // Fail the test immediately
@@ -30,8 +26,6 @@ describe("POST /users", () => {
     // This execute before each test case run
     beforeEach(async () => {
         jwks.start();
-
-        console.log("connection ::::::::::::: ", connection);
 
         // here we drop the database and synchronize the database manually
         await connection.dropDatabase();

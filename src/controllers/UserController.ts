@@ -101,13 +101,6 @@ export class UserController {
             onlyValidData: true,
         });
 
-        console.log(
-            "validateQuery  444444444444444444444444444444:::::::::::: ",
-            validateQuery,
-        );
-
-        console.log("validateQuery :::::::::::: ", validateQuery);
-
         try {
             const [users, count] = await this.userService.getAll(
                 validateQuery as UserQueryParams,

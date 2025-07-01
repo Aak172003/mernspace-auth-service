@@ -13,15 +13,7 @@ export class TenantService {
     }
 
     async getAll(validateQuery: TenantQueryParams) {
-        console.log(
-            "validateQuery 222222222222222222222222222222222222 ",
-            validateQuery,
-        );
-
         const queryBuilder = this.tenantRepository.createQueryBuilder("tenant");
-
-        console.log("validateQuery :::::::::::::::: ", validateQuery);
-        // console.log("queryBuilder :::::::::::::::: ", queryBuilder);
 
         if (validateQuery.q) {
             const searchTerm = `%${validateQuery.q}%`;
@@ -34,10 +26,6 @@ export class TenantService {
             .take(validateQuery.perPage)
             .orderBy("tenant.id", "DESC")
             .getManyAndCount();
-
-        console.log("queryBuilder :::::::::::::::: ", queryBuilder.getSql());
-
-        console.log("result :::::::::::::::: ", result);
 
         return result;
     }

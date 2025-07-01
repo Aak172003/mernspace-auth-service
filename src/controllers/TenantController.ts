@@ -77,8 +77,6 @@ export class TenantController {
             onlyValidData: true,
         });
 
-        console.log("validateQuery :::::::::::: ", validateQuery);
-
         try {
             const tenants = await this.tenantService.getAll(
                 validateQuery as TenantQueryParams,
