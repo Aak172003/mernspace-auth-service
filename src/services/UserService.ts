@@ -106,13 +106,15 @@ export class UserService {
 
     async update(
         userId: number,
-        { firstName, lastName, role }: LimitedUserData,
+        { firstName, lastName, role, email, tenantId }: LimitedUserData,
     ) {
         try {
             const updatUser = await this.userRepository.update(userId, {
                 firstName,
                 lastName,
                 role,
+                email,
+                tenant: tenantId ? { id: tenantId } : undefined,
             });
 
             return updatUser;
@@ -128,6 +130,8 @@ export class UserService {
 
     // Here implement pagination
     async getAll(validateQuery: UserQueryParams) {
+        console.log("validateQuery for user :::::::::::::::: ", validateQuery);
+
         // user is alias name for user table
         const queryBuilder = this.userRepository.createQueryBuilder("user");
 
@@ -188,12 +192,15 @@ export class UserService {
         // For take -> 4 ( which means it get 4 users from the database )
 
         const result = await queryBuilder
+            // Second is alias name for tenant table
+            .leftJoinAndSelect("user.tenant", "tenant")
             .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
             .take(validateQuery.perPage)
             .orderBy("user.id", "DESC")
             .getManyAndCount();
 
         console.log("queryBuilder :::::::::::: ", queryBuilder.getSql());
+        console.log("result :::::::::::: ", result);
         return result;
     }
 

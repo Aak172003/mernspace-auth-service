@@ -14,6 +14,7 @@ import authenticate from "../middlewares/authenticate";
 import tenantValidator from "../validators/tenant-validator";
 import { canAccess } from "../middlewares/canAccess";
 import { Roles } from "../constants";
+import listTenantsValidator from "../validators/list-tenants-validator";
 
 const router = express.Router();
 
@@ -43,7 +44,11 @@ router.patch(
     }) as RequestHandler,
 );
 
-router.get("/", (async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", listTenantsValidator, (async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
     await tenantController.getAll(req, res, next);
 }) as RequestHandler);
 

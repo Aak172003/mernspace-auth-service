@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { ITenant } from "../types";
+import { ITenant, TenantQueryParams } from "../types";
 import { Tenant } from "../entity/Tenant";
 
 export class TenantService {
@@ -12,8 +12,34 @@ export class TenantService {
         return await this.tenantRepository.update(id, tenantData);
     }
 
-    async getAll() {
-        return await this.tenantRepository.find();
+    async getAll(validateQuery: TenantQueryParams) {
+        console.log(
+            "validateQuery 222222222222222222222222222222222222 ",
+            validateQuery,
+        );
+
+        const queryBuilder = this.tenantRepository.createQueryBuilder("tenant");
+
+        console.log("validateQuery :::::::::::::::: ", validateQuery);
+        // console.log("queryBuilder :::::::::::::::: ", queryBuilder);
+
+        if (validateQuery.q) {
+            const searchTerm = `%${validateQuery.q}%`;
+
+            queryBuilder.where("tenant.name ILIKE :searchTerm", { searchTerm });
+        }
+
+        const result = await queryBuilder
+            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
+            .take(validateQuery.perPage)
+            .orderBy("tenant.id", "DESC")
+            .getManyAndCount();
+
+        console.log("queryBuilder :::::::::::::::: ", queryBuilder.getSql());
+
+        console.log("result :::::::::::::::: ", result);
+
+        return result;
     }
 
     async getById(tenantId: number) {

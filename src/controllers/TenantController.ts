@@ -1,8 +1,8 @@
 import { Response, NextFunction, Request } from "express";
 import { TenantService } from "../services/TenantService";
 import { Logger } from "winston";
-import { CreateTenantRequest } from "../types";
-import { validationResult } from "express-validator";
+import { CreateTenantRequest, TenantQueryParams } from "../types";
+import { matchedData, validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
 export class TenantController {
@@ -72,10 +72,25 @@ export class TenantController {
     }
 
     async getAll(req: Request, res: Response, next: NextFunction) {
+        // This is how we get the query params , this matchedData is used to get the query params from the request which is provided by express-validator
+        const validateQuery = matchedData(req, {
+            onlyValidData: true,
+        });
+
+        console.log("validateQuery :::::::::::: ", validateQuery);
+
         try {
-            const tenants = await this.tenantService.getAll();
+            const tenants = await this.tenantService.getAll(
+                validateQuery as TenantQueryParams,
+            );
             this.logger.info("All tenant have been fetched");
-            res.json(tenants);
+            // res.json(tenants);
+            res.json({
+                currentPage: validateQuery.currentPage as number,
+                perPage: validateQuery.perPage as number,
+                total: tenants[1],
+                data: tenants[0],
+            });
         } catch (err) {
             next(err);
             return;

@@ -63,7 +63,7 @@ export class UserController {
             return res.status(400).json({ errors: result.array() });
         }
 
-        const { firstName, lastName, role } = req.body;
+        const { firstName, lastName, role, email, tenantId } = req.body;
 
         const userId = req.params.userId;
 
@@ -78,6 +78,8 @@ export class UserController {
                 firstName,
                 lastName,
                 role,
+                email,
+                tenantId,
             });
 
             this.logger.info(
@@ -98,6 +100,11 @@ export class UserController {
         const validateQuery = matchedData(req, {
             onlyValidData: true,
         });
+
+        console.log(
+            "validateQuery  444444444444444444444444444444:::::::::::: ",
+            validateQuery,
+        );
 
         console.log("validateQuery :::::::::::: ", validateQuery);
 
