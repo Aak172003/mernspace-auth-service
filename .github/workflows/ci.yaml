@@ -33,6 +33,20 @@ jobs:
             - name: Run ESLint
               run: npm run lint:check
 
+            - name: Read Secret Keys
+              run: |
+                  if [ "$DB_NAME" == "postgres" ]; then
+                    echo "✅ DB_NAME matches postgres"
+                  else
+                    echo "❌ DB_NAME does not match postgres"
+                  fi
+
+                  if [ "$DB_PASSWORD" == "5H4Co2aFmRKy6dKv" ]; then
+                    echo "✅ DB_PASSWORD matches expected secret"
+                  else
+                    echo "❌ DB_PASSWORD does not match expected secret"
+                  fi
+
             # Uncomment the test step when ready
             # - name: Test and Coverage
             #   run: npm run test
@@ -40,11 +54,11 @@ jobs:
             - name: Build TypeScript
               run: npm run build
 
-            # - name: SonarCloud Scan
-            #   uses: SonarSource/sonarcloud-github-action@master
-            #   env:
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            - name: SonarCloud Scan
+              uses: SonarSource/sonarcloud-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     build-and-push-docker:
         name: Build and Push Docker Image
