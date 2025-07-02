@@ -218,7 +218,6 @@ describe("POST /aut/register", () => {
             let refreshToken = "";
 
             const cookies = response.headers["set-cookie"] || [];
-            // console.log("cookies ::::::::::::::::::: ", cookies);
             for (const cookie of cookies) {
                 if (cookie.startsWith("accessToken=")) {
                     accessToken = cookie.split(";")[0].split("=")[1];

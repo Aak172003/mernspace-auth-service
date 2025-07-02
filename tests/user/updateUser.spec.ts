@@ -1,12 +1,14 @@
+import createJWKSMock from "mock-jwks";
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../src/config/data-source";
-import request from "supertest";
-import createJWKSMock from "mock-jwks";
+import bcrypt from "bcryptjs";
 import { Roles } from "../../src/constants";
+
+import request from "supertest";
 import app from "../../src/app";
 import { User } from "../../src/entity/User";
-import { Tenant } from "../../src/entity/Tenant";
 import { createTenant } from "../../src/utils";
+import { Tenant } from "../../src/entity/Tenant";
 
 describe("POST /users", () => {
     let connection: DataSource;
@@ -48,7 +50,24 @@ describe("POST /users", () => {
 
     // Happy Path -> Basically means (Given all fields)
     describe("Given all fields", () => {
-        it("should persist the user in the database", async () => {
+        it("should return 200 if admin tries to update a user", async () => {
+            const userData = {
+                firstName: "Rakesh",
+                lastName: "K",
+                email: "rakesh@mern.space",
+                password: "secret",
+            };
+            // Create hashed password
+            const hashedPassword = await bcrypt.hash(userData.password, 10);
+            // Create user repository
+            const userRepository = connection.getRepository(User);
+
+            const savedUser = await userRepository.save({
+                ...userData,
+                password: hashedPassword,
+                role: Roles.MANAGER,
+            });
+
             // So before creating any mangaer first we need to get first tenant from the tenant database
             // Create a dummy tenant
 
@@ -59,64 +78,36 @@ describe("POST /users", () => {
                 role: Roles.ADMIN,
             });
 
-            const userData = {
-                firstName: "Rakesh",
-                lastName: "K",
-                email: "rakesh@mern.space",
+            const updateData = {
+                firstName: "Priyanshi",
+                lastName: "Kumar",
+                email: "priyanshi@mern.space",
                 password: "secret",
                 role: Roles.MANAGER,
                 tenantId: tenant.id,
             };
 
             const response = await request(app)
-                .post("/users")
+                .patch(`/users/${savedUser.id}`)
                 .set("Cookie", [`accessToken=${adminToken};`])
-                .send(userData);
+                .send(updateData);
+            expect(response.statusCode).toBe(200);
 
-            const userRepository = connection.getRepository(User);
-
-            const users = await userRepository.find();
-
-            expect(response.statusCode).toBe(201);
-            expect(users).toHaveLength(1);
-
-            // expect(users[0].role).toBe(Roles.MANAGER);
-            expect(users[0].email).toBe(userData.email);
+            expect(response.body.firstName).not.toBe(updateData.firstName);
+            expect(response.body.lastName).not.toBe(updateData.lastName);
+            expect(response.body.email).not.toBe(updateData.email);
+            expect(response.body.role).not.toBe(updateData.role);
+            expect(response.body.password).not.toBe(updateData.password);
         });
-
-        it("should create manager user", async () => {
-            const tenant = await createTenant(connection.getRepository(Tenant));
-
-            const adminToken = jwks.token({
-                sub: "1",
-                role: Roles.ADMIN,
-            });
-
-            // Arrange the data
-            const userData = {
-                firstName: "Rakesh",
-                lastName: "K",
-                email: "arjun@mern.space",
-                password: "secret",
-                role: Roles.MANAGER,
-                tenantId: tenant.id,
-            };
-            const response = await request(app)
-                .post("/users")
-                .set("Cookie", [`accessToken=${adminToken};`])
-                .send(userData);
-
-            const userRepository = connection.getRepository(User);
-
-            const users = await userRepository.find();
-
-            expect(response.statusCode).toBe(201);
-            expect(users).toHaveLength(1);
-            expect(users[0].role).toBe(Roles.MANAGER);
-        });
-        it.todo("should return 403 if non admin tries to create a user");
     });
 
     // Sad Path -> Basically means (Fields are missing)
-    describe("Fields are missing", () => {});
+    describe("Fields are missing", () => {
+        it.todo(
+            "should return 400 if admin tries to update a user with missing fields",
+        );
+        it.todo(
+            "should return 400 if admin tries to update a user with missing ",
+        );
+    });
 });

@@ -101,7 +101,6 @@ describe("POST /aut/self", () => {
                 .set("Cookie", [`accessToken=${accesstoken};`])
                 .send();
 
-            console.log("Response body -------------- ", response.body);
             expect(response.statusCode).toBe(200);
             // Ensure the response contains the user data
             expect((response.body as Record<string, string>).id).toBe(
@@ -118,8 +117,6 @@ describe("POST /aut/self", () => {
             const response = await request(app)
                 .get("/users")
                 .set("Cookie", [`accessToken=${adminToken};`]);
-
-            console.log("response from user -------------- ", response.body);
 
             expect(response.statusCode).toBe(200);
         });

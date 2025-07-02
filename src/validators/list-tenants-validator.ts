@@ -10,13 +10,6 @@ export default checkSchema(
                 },
             },
         },
-        role: {
-            customSanitizer: {
-                options: (value: unknown) => {
-                    return value ?? "";
-                },
-            },
-        },
         currentPage: {
             // This is how we define from where we get the current page
             // We can mention like this in: 'query' , but we mention like this so we need to add at every parameter which we get from the query

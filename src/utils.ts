@@ -47,8 +47,5 @@ export const createTenant = async (repository: Repository<Tenant>) => {
         address: "Test tenant Address",
     };
     const tenant = await repository.save(tenantData);
-
-    console.log("tenant created --------------- ", tenant);
-
     return tenant;
 };

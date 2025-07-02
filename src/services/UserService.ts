@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 import { User } from "../entity/User";
 import { LimitedUserData, UserData, UserQueryParams } from "../types";
 import createHttpError from "http-errors";
@@ -106,13 +106,15 @@ export class UserService {
 
     async update(
         userId: number,
-        { firstName, lastName, role }: LimitedUserData,
+        { firstName, lastName, role, email, tenantId }: LimitedUserData,
     ) {
         try {
             const updatUser = await this.userRepository.update(userId, {
                 firstName,
                 lastName,
                 role,
+                email,
+                tenant: tenantId ? { id: tenantId } : undefined,
             });
 
             return updatUser;
@@ -128,7 +130,57 @@ export class UserService {
 
     // Here implement pagination
     async getAll(validateQuery: UserQueryParams) {
-        const queryBuilder = this.userRepository.createQueryBuilder();
+        // user is alias name for user table
+        const queryBuilder = this.userRepository.createQueryBuilder("user");
+        if (validateQuery.q) {
+            const searchTerm = `%${validateQuery.q}%`;
+            // Like is case sensitive so we use ILIKE for case insensitive
+
+            // If we use where clause so it make necessary to contain the query in every column
+            // But if we use orWhere clause so it will not make necessary to contain the query in every column
+
+            // Brackets is used to add multiple conditions to the query
+            // qb is alias name for query builder
+            // This is doing column wise search
+            queryBuilder.where(
+                new Brackets((qb) => {
+                    // This is doing row wise search or group wise search
+                    qb.where(
+                        // CONCAT is used to concatenate the firstName and lastName , ' ' is used to add space between firstName and lastName
+                        // ILIKE is used to search the query in a case insensitive manner
+                        // user.firstName is used to search the query in the firstName column
+                        // user.lastName is used to search the query in the lastName column
+                        // q is used to search the query in the q column
+                        // searchTerm is used to search the query in the searchTerm column
+
+                        // This process is called binding the value to the query
+                        // { q: searchTerm } is used to search the query in the q column
+                        "CONCAT(user.firstName, ' ', user.lastName) ILIKE :q",
+                        { q: searchTerm },
+                    ).orWhere("user.email ILIKE :q", { q: searchTerm });
+
+                    // This is doing column wise search
+                    // qb
+                    //     .where("user.firstName ILIKE :q", { q: searchTerm })
+                    //     .orWhere("user.lastName ILIKE :q", { q: searchTerm })
+                    //     .orWhere("user.email ILIKE :q", { q: searchTerm });
+                }),
+            );
+
+            // .where("user.firstName ILIKE :q", { q: searchTerm })
+            // .orWhere("user.lastName ILIKE :q", { q: searchTerm })
+            // .orWhere("user.email ILIKE :q", { q: searchTerm });
+
+            // "" OR lastName ILIKE :searchTerm OR email ILIKE :searchTerm", { searchTerm });
+        }
+
+        if (validateQuery.role) {
+            // andWhere is used to add another condition to the query , but only in single column
+            // where is used to add another condition to the query , but in multiple column
+            queryBuilder.andWhere("user.role = :role", {
+                role: validateQuery.role,
+            });
+        }
 
         // For skip -> (1 -1 )*  4  = 0 ( which means skip 0 users because we are fetching data for first page)
         // For take -> 4 ( which means it get 4 users from the database )
@@ -137,8 +189,11 @@ export class UserService {
         // For take -> 4 ( which means it get 4 users from the database )
 
         const result = await queryBuilder
+            // Second is alias name for tenant table
+            .leftJoinAndSelect("user.tenant", "tenant")
             .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
             .take(validateQuery.perPage)
+            .orderBy("user.id", "DESC")
             .getManyAndCount();
 
         return result;
