@@ -4,7 +4,7 @@
    "description": "The user management service",
    "main": "index.js",
    "scripts": {
-      "dev": "cross-env NODE_ENV=dev nodemon src/server.ts --legacy-watch",
+      "dev": "cross-env NODE_ENV=prod nodemon src/server.ts --legacy-watch",
       "build": "tsc",
       "format:check": "prettier . --check",
       "format:fix": "prettier . --write",
@@ -32,6 +32,7 @@
       "@types/jsonwebtoken": "^9.0.9",
       "@types/node": "^22.15.29",
       "@types/supertest": "^6.0.3",
+      "@types/uuid": "^10.0.0",
       "@types/winston": "^2.4.4",
       "cross-env": "^7.0.3",
       "dotenv": "^16.5.0",
@@ -69,6 +70,7 @@
       "reflect-metadata": "^0.2.2",
       "rsa-pem-to-jwk": "^1.1.3",
       "typeorm": "0.3.24",
+      "uuid": "^11.1.0",
       "winston": "^3.17.0"
    }
 }

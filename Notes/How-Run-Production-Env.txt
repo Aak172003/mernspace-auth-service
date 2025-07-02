@@ -1,0 +1,1 @@
+"dev": "cross-env NODE_ENV=prod nodemon src/server.ts --legacy-watch",

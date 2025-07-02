@@ -3,13 +3,12 @@
 import "reflect-metadata";
 
 import express, { NextFunction, Request, Response } from "express";
-import logger from "./config/logger";
-import { HttpError } from "http-errors";
 import authRouter from "./routes/auth";
 import tenantRouter from "./routes/tenant";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user";
 import cors from "cors";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 const app = express();
 
@@ -45,6 +44,7 @@ app.use("/auth", authRouter);
 app.use("/tenants", tenantRouter);
 app.use("/users", userRouter);
 
+app.use(globalErrorHandler);
 // Global Middleware -> which automatically execute whenever we hit any api endpoint
 // Global error Handler
 
@@ -56,22 +56,22 @@ app.use("/users", userRouter);
 //     stack?: string;
 // }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
-    logger.error(error.message);
-    const statusCode = error.statusCode || error.status || 500;
+ 
+// app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
+//     logger.error(error.message);
+//     const statusCode = error.statusCode || error.status || 500;
 
-    res.status(statusCode).json({
-        errors: [
-            {
-                type: error.name,
-                msg: error.message,
-                path: "",
-                location: "",
-                statusCode: statusCode,
-            },
-        ],
-    });
-});
+//     res.status(statusCode).json({
+//         errors: [
+//             {
+//                 type: error.name,
+//                 msg: error.message,
+//                 path: "",
+//                 location: "",
+//                 statusCode: statusCode,
+//             },
+//         ],
+//     });
+// });
 
 export default app;
