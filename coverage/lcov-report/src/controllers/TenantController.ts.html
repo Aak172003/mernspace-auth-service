@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.61% </span>
+                <span class="strong">26.17% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>62/149</span>
+                <span class='fraction'>39/149</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.61% </span>
+                <span class="strong">26.17% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>62/149</span>
+                <span class='fraction'>39/149</span>
             </div>
         
             
@@ -286,32 +286,32 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -434,33 +434,33 @@ export class TenantController {
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    async getAll(req: Request, res: Response, next: NextFunction) {
-        console.log("11111111111111111111111111111111111");
-        // This is how we get the query params , this matchedData is used to get the query params from the request which is provided by express-validator
-        const validateQuery = matchedData(req, {
-            onlyValidData: true,
-        });
-&nbsp;
-        try {
-            console.log("22222222222222222222222222222222222");
-            const tenants = await this.tenantService.getAll(
-                validateQuery as TenantQueryParams,
-            );
-            console.log("33333333333333333333333333333333333");
-            this.logger.info("All tenant have been fetched");
-            // res.json(tenants);
-            console.log("44444444444444444444444444444444444");
-            res.json({
-                currentPage: validateQuery.currentPage as number,
-                perPage: validateQuery.perPage as number,
-                total: tenants[1],
-                data: tenants[0],
-            });
-        } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
+    async <span class="fstat-no" title="function not covered" >getAll(req: Request, res: Response, next: NextFunction) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log("11111111111111111111111111111111111");</span>
+<span class="cstat-no" title="statement not covered" >        // This is how we get the query params , this matchedData is used to get the query params from the request which is provided by express-validator</span>
+<span class="cstat-no" title="statement not covered" >        const validateQuery = matchedData(req, {</span>
+<span class="cstat-no" title="statement not covered" >            onlyValidData: true,</span>
+<span class="cstat-no" title="statement not covered" >        });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("22222222222222222222222222222222222");</span>
+<span class="cstat-no" title="statement not covered" >            const tenants = await this.tenantService.getAll(</span>
+<span class="cstat-no" title="statement not covered" >                validateQuery as TenantQueryParams,</span>
+<span class="cstat-no" title="statement not covered" >            );</span>
+<span class="cstat-no" title="statement not covered" >            console.log("33333333333333333333333333333333333");</span>
+<span class="cstat-no" title="statement not covered" >            this.logger.info("All tenant have been fetched");</span>
+<span class="cstat-no" title="statement not covered" >            // res.json(tenants);</span>
+<span class="cstat-no" title="statement not covered" >            console.log("44444444444444444444444444444444444");</span>
+<span class="cstat-no" title="statement not covered" >            res.json({</span>
+<span class="cstat-no" title="statement not covered" >                currentPage: validateQuery.currentPage as number,</span>
+<span class="cstat-no" title="statement not covered" >                perPage: validateQuery.perPage as number,</span>
+<span class="cstat-no" title="statement not covered" >                total: tenants[1],</span>
+<span class="cstat-no" title="statement not covered" >                data: tenants[0],</span>
+<span class="cstat-no" title="statement not covered" >            });</span>
+<span class="cstat-no" title="statement not covered" >        } catch (err) {</span>
 <span class="cstat-no" title="statement not covered" >            next(err);</span>
 <span class="cstat-no" title="statement not covered" >            return;</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
-    }
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     async <span class="fstat-no" title="function not covered" >getOne(req: Request, res: Response, next: NextFunction) {</span>
 <span class="cstat-no" title="statement not covered" >        const tenantId = req.params.tenantId;</span>
@@ -517,7 +517,7 @@ export class TenantController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-02T11:27:30.502Z
+                at 2025-07-02T16:54:55.961Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

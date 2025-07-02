@@ -40,5 +40,5 @@ export class User {
 
     // It represents -> many user is related to one tenant
     @ManyToOne(() => Tenant)
-    tenant: Tenant;
+    tenant: Tenant | null;
 }
