@@ -4,6 +4,7 @@
 
 // Scema Validation
 import { checkSchema } from "express-validator";
+import { UpdateUserRequest } from "../types";
 export default checkSchema({
     firstName: {
         errorMessage: "First Name is Required",
@@ -29,8 +30,19 @@ export default checkSchema({
         trim: true,
     },
     tenantId: {
-        notEmpty: true,
+        // notEmpty: true,
         errorMessage: "Tenant id is required!",
         trim: true,
+        custom: {
+            options: (value: string, { req }) => {
+                console.log("value ::::::::::::: ", value);
+                const role = (req as UpdateUserRequest).body.role;
+                if (role === "admin") {
+                    return true;
+                } else {
+                    return !!value;
+                }
+            },
+        },
     },
 });

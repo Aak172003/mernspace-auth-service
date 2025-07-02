@@ -56,7 +56,6 @@ app.use(globalErrorHandler);
 //     stack?: string;
 // }
 
- 
 // app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
 //     logger.error(error.message);
 //     const statusCode = error.statusCode || error.status || 500;
