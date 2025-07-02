@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.86% </span>
+                <span class="strong">76.74% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/43</span>
+                <span class='fraction'>33/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.86% </span>
+                <span class="strong">76.74% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/43</span>
+                <span class='fraction'>33/43</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -121,25 +121,25 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -163,26 +163,26 @@ export class TenantService {
 <span class="cstat-no" title="statement not covered" >        return await this.tenantRepository.update(id, tenantData);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    async <span class="fstat-no" title="function not covered" >getAll(validateQuery: TenantQueryParams) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log("55555555555555555555555555555555555");</span>
-<span class="cstat-no" title="statement not covered" >        const queryBuilder = this.tenantRepository.createQueryBuilder("tenant");</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (validateQuery.q) {</span>
+    async getAll(validateQuery: TenantQueryParams) {
+        console.log("55555555555555555555555555555555555");
+        const queryBuilder = this.tenantRepository.createQueryBuilder("tenant");
+&nbsp;
+        if (validateQuery.q) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >            const searchTerm = `%${validateQuery.q}%`;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >            queryBuilder.where("tenant.name ILIKE :searchTerm", { searchTerm });</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        console.log("66666666666666666666666666666666666");</span>
-<span class="cstat-no" title="statement not covered" >        const result = await queryBuilder</span>
-<span class="cstat-no" title="statement not covered" >            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)</span>
-<span class="cstat-no" title="statement not covered" >            .take(validateQuery.perPage)</span>
-<span class="cstat-no" title="statement not covered" >            .orderBy("tenant.id", "DESC")</span>
-<span class="cstat-no" title="statement not covered" >            .getManyAndCount();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        console.log("77777777777777777777777777777777777", result);</span>
-<span class="cstat-no" title="statement not covered" >        return result;</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+        console.log("66666666666666666666666666666666666");
+        const result = await queryBuilder
+            .skip((validateQuery.currentPage - 1) * validateQuery.perPage)
+            .take(validateQuery.perPage)
+            .orderBy("tenant.id", "DESC")
+            .getManyAndCount();
+&nbsp;
+        console.log("77777777777777777777777777777777777", result);
+        return result;
+    }
 &nbsp;
     async <span class="fstat-no" title="function not covered" >getById(tenantId: number) {</span>
 <span class="cstat-no" title="statement not covered" >        return await this.tenantRepository.findOne({ where: { id: tenantId } });</span>
@@ -199,7 +199,7 @@ export class TenantService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-02T16:54:55.961Z
+                at 2025-07-02T17:29:22.894Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

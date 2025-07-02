@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50.24% </span>
+                <span class="strong">58.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>103/205</span>
+                <span class='fraction'>119/205</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.14% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/7</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50.24% </span>
+                <span class="strong">58.04% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>103/205</span>
+                <span class='fraction'>119/205</span>
             </div>
         
             
@@ -375,28 +375,28 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -579,29 +579,29 @@ export class UserService {
         return user;
     }
 &nbsp;
-    async <span class="fstat-no" title="function not covered" >update(</span>
-<span class="cstat-no" title="statement not covered" >        userId: number,</span>
-<span class="cstat-no" title="statement not covered" >        { firstName, lastName, role, email, tenantId }: LimitedUserData,</span>
-<span class="cstat-no" title="statement not covered" >    ) {</span>
-<span class="cstat-no" title="statement not covered" >        try {</span>
-<span class="cstat-no" title="statement not covered" >            const updatUser = await this.userRepository.update(userId, {</span>
-<span class="cstat-no" title="statement not covered" >                firstName,</span>
-<span class="cstat-no" title="statement not covered" >                lastName,</span>
-<span class="cstat-no" title="statement not covered" >                role,</span>
-<span class="cstat-no" title="statement not covered" >                email,</span>
-<span class="cstat-no" title="statement not covered" >                tenant: tenantId ? { id: tenantId } : undefined,</span>
-<span class="cstat-no" title="statement not covered" >            });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >            return updatUser;</span>
-<span class="cstat-no" title="statement not covered" >            // eslint-disable-next-line @typescript-eslint/no-unused-vars</span>
-<span class="cstat-no" title="statement not covered" >        } catch (err) {</span>
+    async update(
+        userId: number,
+        { firstName, lastName, role, email, tenantId }: LimitedUserData,
+    ) {
+        try {
+            const updatUser = await this.userRepository.update(userId, {
+                firstName,
+                lastName,
+                role,
+                email,
+                tenant: tenantId ? { id: tenantId } <span class="branch-0 cbranch-no" title="branch not covered" >: null,</span>
+            });
+&nbsp;
+            return updatUser;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
 <span class="cstat-no" title="statement not covered" >            const error = createHttpError(</span>
 <span class="cstat-no" title="statement not covered" >                500,</span>
 <span class="cstat-no" title="statement not covered" >                "Failed to update the user in the database",</span>
 <span class="cstat-no" title="statement not covered" >            );</span>
 <span class="cstat-no" title="statement not covered" >            throw error;</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    }
 &nbsp;
     // Here implement pagination
     async getAll(validateQuery: UserQueryParams) {
@@ -685,7 +685,7 @@ export class UserService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-02T16:54:55.961Z
+                at 2025-07-02T17:29:22.894Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
