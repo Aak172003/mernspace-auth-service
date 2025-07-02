@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751460964569" clover="3.2.0">
-  <project timestamp="1751460964569" name="All files">
-    <metrics statements="126" coveredstatements="126" conditionals="5" coveredconditionals="2" methods="1" coveredmethods="1" elements="132" coveredelements="129" complexity="0" loc="126" ncloc="126" packages="2" files="2" classes="2"/>
+<coverage generated="1751461059317" clover="3.2.0">
+  <project timestamp="1751461059317" name="All files">
+    <metrics statements="123" coveredstatements="123" conditionals="5" coveredconditionals="2" methods="1" coveredmethods="1" elements="129" coveredelements="126" complexity="0" loc="123" ncloc="123" packages="2" files="2" classes="2"/>
     <package name="src">
       <metrics statements="79" coveredstatements="79" conditionals="1" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="app.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\app.ts">
@@ -88,9 +88,9 @@
       </file>
     </package>
     <package name="src.middlewares">
-      <metrics statements="47" coveredstatements="47" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <metrics statements="44" coveredstatements="44" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <file name="globalErrorHandler.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\middlewares\globalErrorHandler.ts">
-        <metrics statements="47" coveredstatements="47" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <metrics statements="44" coveredstatements="44" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -130,14 +130,11 @@
         <line num="37" count="2" type="stmt"/>
         <line num="38" count="2" type="stmt"/>
         <line num="39" count="2" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
-        <line num="41" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="40" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="41" count="2" type="stmt"/>
         <line num="42" count="2" type="stmt"/>
         <line num="43" count="2" type="stmt"/>
         <line num="44" count="2" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="47" count="2" type="stmt"/>
       </file>
     </package>
   </project>
