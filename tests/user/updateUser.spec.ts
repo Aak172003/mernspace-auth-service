@@ -106,5 +106,8 @@ describe("POST /users", () => {
         it.todo(
             "should return 400 if admin tries to update a user with missing fields",
         );
+        it.todo(
+            "should return 400 if admin tries to update a user with missing ",
+        );
     });
 });
