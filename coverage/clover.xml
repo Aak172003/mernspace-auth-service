@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751455333199" clover="3.2.0">
-  <project timestamp="1751455333199" name="All files">
-    <metrics statements="2186" coveredstatements="1538" conditionals="105" coveredconditionals="69" methods="70" coveredmethods="39" elements="2361" coveredelements="1646" complexity="0" loc="2186" ncloc="2186" packages="11" files="38" classes="38"/>
+<coverage generated="1751455650578" clover="3.2.0">
+  <project timestamp="1751455650578" name="All files">
+    <metrics statements="2185" coveredstatements="1537" conditionals="105" coveredconditionals="69" methods="70" coveredmethods="39" elements="2360" coveredelements="1645" complexity="0" loc="2185" ncloc="2185" packages="11" files="38" classes="38"/>
     <package name="src">
       <metrics statements="158" coveredstatements="111" conditionals="13" coveredconditionals="7" methods="5" coveredmethods="3"/>
       <file name="app.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\app.ts">
@@ -1362,9 +1362,9 @@
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="248" coveredstatements="240" conditionals="14" coveredconditionals="14" methods="0" coveredmethods="0"/>
+      <metrics statements="247" coveredstatements="239" conditionals="14" coveredconditionals="14" methods="0" coveredmethods="0"/>
       <file name="auth.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\routes\auth.ts">
-        <metrics statements="96" coveredstatements="93" conditionals="4" coveredconditionals="4" methods="0" coveredmethods="0"/>
+        <metrics statements="95" coveredstatements="92" conditionals="4" coveredconditionals="4" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1415,9 +1415,9 @@
         <line num="48" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="52" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="53" count="11" type="stmt"/>
+        <line num="51" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="52" count="11" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
         <line num="55" count="1" type="stmt"/>
         <line num="56" count="1" type="stmt"/>
@@ -1429,25 +1429,25 @@
         <line num="62" count="1" type="stmt"/>
         <line num="63" count="1" type="stmt"/>
         <line num="64" count="1" type="stmt"/>
-        <line num="65" count="1" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
         <line num="68" count="1" type="stmt"/>
         <line num="69" count="1" type="stmt"/>
         <line num="70" count="1" type="stmt"/>
         <line num="71" count="1" type="stmt"/>
         <line num="72" count="1" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="74" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="75" count="3" type="stmt"/>
+        <line num="73" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
         <line num="76" count="1" type="stmt"/>
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
         <line num="84" count="1" type="stmt"/>
         <line num="85" count="1" type="stmt"/>
         <line num="86" count="1" type="stmt"/>
@@ -1455,12 +1455,11 @@
         <line num="88" count="1" type="stmt"/>
         <line num="89" count="1" type="stmt"/>
         <line num="90" count="1" type="stmt"/>
-        <line num="91" count="1" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
         <line num="94" count="1" type="stmt"/>
         <line num="95" count="1" type="stmt"/>
-        <line num="96" count="1" type="stmt"/>
       </file>
       <file name="tenant.ts" path="C:\Users\Aakash Prajapati\Desktop\Level\mernspace-auth-service\src\routes\tenant.ts">
         <metrics statements="73" coveredstatements="70" conditionals="4" coveredconditionals="4" methods="0" coveredmethods="0"/>
